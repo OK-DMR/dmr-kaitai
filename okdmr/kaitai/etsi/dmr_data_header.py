@@ -120,7 +120,7 @@ class DmrDataHeader(KaitaiStruct):
         )
 
     class DataHeaderShortRaw(KaitaiStruct):
-        """9.2.11 Raw short data packet Header (R_HEAD) PDU."""
+        """9.2.11 Raw short data packet Header (R_HEAD)."""
 
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -148,6 +148,22 @@ class DmrDataHeader(KaitaiStruct):
             self.bit_padding = self._io.read_bits_int_be(8)
             self._io.align_to_byte()
             self.crc = self._io.read_bytes(2)
+
+        @property
+        def appended_blocks(self):
+            if hasattr(self, "_m_appended_blocks"):
+                return (
+                    self._m_appended_blocks
+                    if hasattr(self, "_m_appended_blocks")
+                    else None
+                )
+
+            self._m_appended_blocks = (
+                self.appended_blocks_msb << 4
+            ) + self.appended_blocks_lsb
+            return (
+                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
+            )
 
     class DataHeaderProprietary(KaitaiStruct):
         """9.2.9 Proprietary Header (P_HEAD) PDU."""
@@ -207,6 +223,22 @@ class DmrDataHeader(KaitaiStruct):
             self.status_precoded = self._io.read_bits_int_be(10)
             self._io.align_to_byte()
             self.crc = self._io.read_bytes(2)
+
+        @property
+        def appended_blocks(self):
+            if hasattr(self, "_m_appended_blocks"):
+                return (
+                    self._m_appended_blocks
+                    if hasattr(self, "_m_appended_blocks")
+                    else None
+                )
+
+            self._m_appended_blocks = (
+                self.appended_blocks_msb << 4
+            ) + self.appended_blocks_lsb
+            return (
+                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
+            )
 
     class DataHeaderResponse(KaitaiStruct):
         """9.2.4 Confirmed Response packet Header (C_RHEAD) PDU."""
@@ -331,6 +363,22 @@ class DmrDataHeader(KaitaiStruct):
             self.bit_padding = self._io.read_bits_int_be(8)
             self._io.align_to_byte()
             self.crc = self._io.read_bytes(2)
+
+        @property
+        def appended_blocks(self):
+            if hasattr(self, "_m_appended_blocks"):
+                return (
+                    self._m_appended_blocks
+                    if hasattr(self, "_m_appended_blocks")
+                    else None
+                )
+
+            self._m_appended_blocks = (
+                self.appended_blocks_msb << 4
+            ) + self.appended_blocks_lsb
+            return (
+                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
+            )
 
     class DataHeaderUdt(KaitaiStruct):
         """9.2.13 Unified Data Transport Header (UDT_HEAD) PDU."""

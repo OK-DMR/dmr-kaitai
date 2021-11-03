@@ -15,3 +15,5 @@ do
   fi
   cd ${dirbase}
 done
+
+black okdmr

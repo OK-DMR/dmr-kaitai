@@ -268,7 +268,10 @@ types:
       - id: crc
         size: 2
   data_header_short_raw:
-    doc: 9.2.11 Raw short data packet Header (R_HEAD) PDU
+    doc: 9.2.11 Raw short data packet Header (R_HEAD)
+    instances:
+      appended_blocks:
+        value: (appended_blocks_msb << 4) + appended_blocks_lsb
     seq:
       - id: llid_destination_is_group
         type: b1
@@ -307,6 +310,9 @@ types:
         size: 2
   data_header_short_defined:
     doc: 9.2.12 Defined Data short data packet Header (DD_HEAD) PDU
+    instances:
+      appended_blocks:
+        value: (appended_blocks_msb << 4) + appended_blocks_lsb
     seq:
       - id: llid_destination_is_group
         type: b1
@@ -344,6 +350,9 @@ types:
         size: 2
   data_header_short_status_precoded:
     doc: 9.2.10 Status/Precoded short data packet Header (SP_HEAD) PDU
+    instances:
+      appended_blocks:
+        value: (appended_blocks_msb << 4) + appended_blocks_lsb
     seq:
       - id: llid_destination_is_group
         type: b1
