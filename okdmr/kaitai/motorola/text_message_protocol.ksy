@@ -1,6 +1,6 @@
 meta:
   id: text_message_protocol
-  endian: be
+  endian: le
 enums:
   tms_service_capability:
     0: limited_capability
