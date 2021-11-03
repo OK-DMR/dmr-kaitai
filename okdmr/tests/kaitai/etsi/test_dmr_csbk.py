@@ -2,6 +2,7 @@
 from typing import List
 
 from okdmr.kaitai.etsi.dmr_csbk import DmrCsbk
+from okdmr.tests.tests_utils import prettyprint
 
 
 def test_csbk_hex():
@@ -11,4 +12,4 @@ def test_csbk_hex():
     ]
 
     for hexstring in hexstrings:
-        DmrCsbk.from_bytes(bytes.fromhex(hexstring))
+        prettyprint(DmrCsbk.from_bytes(bytes.fromhex(hexstring)))
