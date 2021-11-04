@@ -15,7 +15,7 @@ types:
         doc: optional headers follow if this indicator is set
       - id: acknowledgement_required
         type: b1
-        doc: if this PDU is request, this indicates requirement of "ACK response", if this PDU is response it indicates this is the required "ACK response"
+        doc: if this PDU is request, this indicates requirement of "ACK response", if this PDU is response it indicates successfull "ACK response" (0 means failure)
       - id: reserved
         type: b1
         doc: unused/reserved
