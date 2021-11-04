@@ -7,16 +7,16 @@ This repository contains [Kaitai-IO](https://kaitai.io/) definitions of various 
 Please follow these steps
 
   1. Add or update `.ksy` definition file
-  2. Run re-compilation scripts (generate .py and format using *black* formatter)
+  2. Run re-compilation script `./rebuild-all.sh` (generates .py from .ksy and formats them using *black* formatter)
   3. Provide at least one example dataset to check the implementation with
 
 And specifically avoid these mistakes:
 
-  1. Modifying generated python sources / dissectors
+  1. Modifying generated python sources / dissectors after generating
 
 ## Testing
 
-Simply run `pytest` in the project root directory, that should pick up files `test_*.py` and run test methods named `test_*`
+run `make test` (or pytest directly like this `env PYTHONPATH=. pytest -vrpP`)
 
 ## License
 

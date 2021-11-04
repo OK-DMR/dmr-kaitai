@@ -1,7 +1,7 @@
 from typing import List
 
 from okdmr.kaitai.motorola.text_message_protocol import TextMessageProtocol
-from okdmr.tests.tests_utils import prettyprint
+from okdmr.tests.kaitai.tests_utils import prettyprint
 
 
 def test_ahoj():

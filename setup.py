@@ -17,10 +17,8 @@ setup(
     author="Marek Sebera",
     author_email="marek.sebera@gmail.com",
     license="AGPL-3.0",
-    version="0.3",
+    version="0.4",
     packages=[
-        "okdmr",
-        "okdmr.kaitai",
         "okdmr.kaitai.etsi",
         "okdmr.kaitai.homebrew",
         "okdmr.kaitai.hytera",
