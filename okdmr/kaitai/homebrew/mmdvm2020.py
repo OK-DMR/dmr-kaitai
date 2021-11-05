@@ -24,6 +24,22 @@ class Mmdvm2020(KaitaiStruct):
         group_call = 0
         private_call = 1
 
+    class TalkerAliasTypes(Enum):
+        talker_alias_header = 0
+        talker_alias_block_1 = 1
+        talker_alias_block_2 = 2
+        talker_alias_block_3 = 3
+
+    class PositionErrors(Enum):
+        less_than_2m = 0
+        less_than_20m = 1
+        less_than_200m = 2
+        less_than_2km = 3
+        less_than_20km = 4
+        less_than_or_equal_200km = 5
+        more_than_200km = 6
+        position_error_unknown_or_invalid = 7
+
     def __init__(self, _io, _parent=None, _root=None):
         self._io = _io
         self._parent = _parent
@@ -37,6 +53,8 @@ class Mmdvm2020(KaitaiStruct):
             self.command_data = Mmdvm2020.TypeRepeaterLoginRequest(
                 self._io, self, self._root
             )
+        elif _on == u"DMRG":
+            self.command_data = Mmdvm2020.TypeRadioPosition(self._io, self, self._root)
         elif _on == u"RPTA":
             self.command_data = Mmdvm2020.TypeMasterRepeaterAck(
                 self._io, self, self._root
@@ -61,14 +79,14 @@ class Mmdvm2020(KaitaiStruct):
             )
         elif _on == u"MSTP":
             self.command_data = Mmdvm2020.TypeMasterPong(self._io, self, self._root)
+        elif _on == u"RPTS":
+            self.command_data = Mmdvm2020.TypeRepeaterBeacon(self._io, self, self._root)
         elif _on == u"MSTN":
             self.command_data = Mmdvm2020.TypeMasterNotAccept(
                 self._io, self, self._root
             )
         elif _on == u"DMRA":
             self.command_data = Mmdvm2020.TypeTalkerAlias(self._io, self, self._root)
-        else:
-            self.command_data = Mmdvm2020.TypeUnknown(self._io, self, self._root)
 
     class TypeMasterPong(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -88,6 +106,24 @@ class Mmdvm2020(KaitaiStruct):
                 )
             self.repeater_id = self._io.read_u4be()
 
+    class TypeRadioPosition(KaitaiStruct):
+        """etsi dmr, link control, type flcos::gps_info, specifically gps_info_lc_pdu."""
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.radio_id = self._io.read_bits_int_be(24)
+            self.reserved = self._io.read_bits_int_be(4)
+            self.position_error = KaitaiStream.resolve_enum(
+                Mmdvm2020.PositionErrors, self._io.read_bits_int_be(3)
+            )
+            self.longitude = self._io.read_bits_int_be(25)
+            self.latitude = self._io.read_bits_int_be(24)
+
     class TypeTalkerAlias(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -96,9 +132,11 @@ class Mmdvm2020(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.repeater_id = self._io.read_u4be()
             self.radio_id = self._io.read_bits_int_be(24)
             self._io.align_to_byte()
+            self.talker_alias_type = KaitaiStream.resolve_enum(
+                Mmdvm2020.TalkerAliasTypes, self._io.read_u1()
+            )
             self.talker_alias = (self._io.read_bytes(8)).decode(u"ASCII")
 
     class TypeRepeaterConfigurationOrClosing(KaitaiStruct):
@@ -228,6 +266,18 @@ class Mmdvm2020(KaitaiStruct):
 
             if not (self._io.is_eof()):
                 self.rssi = self._io.read_u1()
+
+    class TypeRepeaterBeacon(KaitaiStruct):
+        """undefined currently."""
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            pass
 
     class TypeRepeaterOptions(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

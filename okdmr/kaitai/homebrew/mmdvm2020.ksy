@@ -10,6 +10,20 @@ enums:
   call_types:
     0: "group_call"
     1: "private_call"
+  talker_alias_types:
+    0: talker_alias_header
+    1: talker_alias_block_1
+    2: talker_alias_block_2
+    3: talker_alias_block_3
+  position_errors:
+    0b000: less_than_2m
+    0b001: less_than_20m
+    0b010: less_than_200m
+    0b011: less_than_2km
+    0b100: less_than_20km
+    0b101: less_than_or_equal_200km
+    0b110: more_than_200km
+    0b111: position_error_unknown_or_invalid
 types:
   type_unknown:
     seq:
@@ -17,10 +31,11 @@ types:
         size-eos: true
   type_talker_alias:
     seq:
-      - id: repeater_id
-        type: u4
       - id: radio_id
         type: b24
+      - id: talker_alias_type
+        enum: talker_alias_types
+        type: u1
       - id: talker_alias
         type: str
         size: 8
@@ -183,6 +198,22 @@ types:
         encoding: ASCII
         size-eos: true
         doc: structure probably key=value;key=value;...
+  type_radio_position:
+    doc: etsi dmr, link control, type flcos::gps_info, specifically gps_info_lc_pdu
+    seq:
+      - id: radio_id
+        type: b24
+      - id: reserved
+        type: b4
+      - id: position_error
+        type: b3
+        enum: position_errors
+      - id: longitude
+        type: b25
+      - id: latitude
+        type: b24
+  type_repeater_beacon:
+    doc: undefined currently
 instances:
   fifth_letter:
     pos: 4
@@ -199,6 +230,7 @@ seq:
       switch-on: command_prefix
       cases:
         '"DMRA"': type_talker_alias
+        '"DMRG"': type_radio_position
         '"DMRD"': type_dmr_data
         '"MSTC"': type_master_closing
         '"MSTP"': type_master_pong
@@ -209,4 +241,4 @@ seq:
         '"RPTA"': type_master_repeater_ack
         '"RPTK"': type_repeater_login_response
         '"RPTC"': type_repeater_configuration_or_closing
-        _: type_unknown
+        '"RPTS"': type_repeater_beacon

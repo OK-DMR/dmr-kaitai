@@ -15,10 +15,10 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 from okdmr.kaitai.hytera import data_delivery_states
 from okdmr.kaitai.hytera import radio_control_protocol
 from okdmr.kaitai.hytera import telemetry_protocol
-from okdmr.kaitai.hytera import data_transmit_protocol
-from okdmr.kaitai.hytera import text_message_protocol
-from okdmr.kaitai.hytera import radio_registration_service
 from okdmr.kaitai.hytera import location_protocol
+from okdmr.kaitai.hytera import text_message_protocol
+from okdmr.kaitai.hytera import data_transmit_protocol
+from okdmr.kaitai.hytera import radio_registration_service
 
 
 class HyteraDmrApplicationProtocol(KaitaiStruct):
