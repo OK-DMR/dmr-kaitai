@@ -30,16 +30,6 @@ class Mmdvm2020(KaitaiStruct):
         talker_alias_block_2 = 2
         talker_alias_block_3 = 3
 
-    class PositionErrors(Enum):
-        less_than_2m = 0
-        less_than_20m = 1
-        less_than_200m = 2
-        less_than_2km = 3
-        less_than_20km = 4
-        less_than_or_equal_200km = 5
-        more_than_200km = 6
-        position_error_unknown_or_invalid = 7
-
     def __init__(self, _io, _parent=None, _root=None):
         self._io = _io
         self._parent = _parent
@@ -117,12 +107,8 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.radio_id = self._io.read_bits_int_be(24)
-            self.reserved = self._io.read_bits_int_be(4)
-            self.position_error = KaitaiStream.resolve_enum(
-                Mmdvm2020.PositionErrors, self._io.read_bits_int_be(3)
-            )
-            self.longitude = self._io.read_bits_int_be(25)
-            self.latitude = self._io.read_bits_int_be(24)
+            self._io.align_to_byte()
+            self.position_data = LinkControl.GpsInfoLcPdu(self._io, self, self._root)
 
     class TypeTalkerAlias(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

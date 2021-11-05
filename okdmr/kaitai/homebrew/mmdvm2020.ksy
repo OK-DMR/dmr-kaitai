@@ -1,6 +1,8 @@
 meta:
   id: mmdvm2020
   endian: be
+  imports:
+    - ../etsi/link_control
 doc: |
   MMDVM protocol structure (MMDVMHost/HBlink3/DMRGateway) based on reversing effort
 enums:
@@ -15,15 +17,6 @@ enums:
     1: talker_alias_block_1
     2: talker_alias_block_2
     3: talker_alias_block_3
-  position_errors:
-    0b000: less_than_2m
-    0b001: less_than_20m
-    0b010: less_than_200m
-    0b011: less_than_2km
-    0b100: less_than_20km
-    0b101: less_than_or_equal_200km
-    0b110: more_than_200km
-    0b111: position_error_unknown_or_invalid
 types:
   type_unknown:
     seq:
@@ -203,15 +196,8 @@ types:
     seq:
       - id: radio_id
         type: b24
-      - id: reserved
-        type: b4
-      - id: position_error
-        type: b3
-        enum: position_errors
-      - id: longitude
-        type: b25
-      - id: latitude
-        type: b24
+      - id: position_data
+        type: link_control::gps_info_lc_pdu
   type_repeater_beacon:
     doc: undefined currently
 instances:
