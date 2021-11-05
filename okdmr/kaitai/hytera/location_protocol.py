@@ -66,7 +66,7 @@ class LocationProtocol(KaitaiStruct):
 
     def _read(self):
         self.opcode_header = self._io.read_bytes(2)
-        self.message_length = self._io.read_u2be()
+        self.message_length = self._io.read_u2le()
         _on = self.opcode_header_int
         if _on == LocationProtocol.LpSpecificTypes.triggered_report_answer:
             self.data = LocationProtocol.TriggeredReportAnswer(

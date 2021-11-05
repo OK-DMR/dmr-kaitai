@@ -26,17 +26,15 @@ instances:
   is_reliable_message:
     type: b1
     pos: 0
-  message_type:
-    enum: message_header_types
-    value: message_header & 0x8F
 seq:
   - id: message_header
     type: u1
+    enum: message_header_types
   - id: data
     doc: |
       contains opcode (2 bytes), payload length (2 bytes) and payload (if length > 0)
     type:
-      switch-on: message_type
+      switch-on: message_header
       cases:
         message_header_types::radio_control_protocol: radio_control_protocol
         message_header_types::location_protocol: location_protocol

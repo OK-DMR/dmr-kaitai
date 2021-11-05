@@ -38,7 +38,7 @@ class RadioRegistrationService(KaitaiStruct):
         self.rrs_type = KaitaiStream.resolve_enum(
             RadioRegistrationService.RrsTypes, self._io.read_u1()
         )
-        self.message_length = self._io.read_u2le()
+        self.message_length = self._io.read_u2be()
         self.radio_ip = radio_ip.RadioIp(self._io)
         if (self.rrs_type == RadioRegistrationService.RrsTypes.registration_ack) or (
             self.rrs_type == RadioRegistrationService.RrsTypes.online_check_ack

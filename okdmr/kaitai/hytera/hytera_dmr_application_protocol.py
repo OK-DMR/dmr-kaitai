@@ -15,10 +15,10 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 from okdmr.kaitai.hytera import data_delivery_states
 from okdmr.kaitai.hytera import radio_control_protocol
 from okdmr.kaitai.hytera import telemetry_protocol
-from okdmr.kaitai.hytera import location_protocol
+from okdmr.kaitai.hytera import data_transmit_protocol
 from okdmr.kaitai.hytera import text_message_protocol
 from okdmr.kaitai.hytera import radio_registration_service
-from okdmr.kaitai.hytera import data_transmit_protocol
+from okdmr.kaitai.hytera import location_protocol
 
 
 class HyteraDmrApplicationProtocol(KaitaiStruct):
@@ -38,8 +38,10 @@ class HyteraDmrApplicationProtocol(KaitaiStruct):
         self._read()
 
     def _read(self):
-        self.message_header = self._io.read_u1()
-        _on = self.message_type
+        self.message_header = KaitaiStream.resolve_enum(
+            HyteraDmrApplicationProtocol.MessageHeaderTypes, self._io.read_u1()
+        )
+        _on = self.message_header
         if _on == HyteraDmrApplicationProtocol.MessageHeaderTypes.radio_registration:
             self.data = radio_registration_service.RadioRegistrationService(self._io)
         elif _on == HyteraDmrApplicationProtocol.MessageHeaderTypes.telemetry_protocol:
@@ -99,13 +101,3 @@ class HyteraDmrApplicationProtocol(KaitaiStruct):
             if hasattr(self, "_m_is_reliable_message")
             else None
         )
-
-    @property
-    def message_type(self):
-        if hasattr(self, "_m_message_type"):
-            return self._m_message_type if hasattr(self, "_m_message_type") else None
-
-        self._m_message_type = KaitaiStream.resolve_enum(
-            HyteraDmrApplicationProtocol.MessageHeaderTypes, (self.message_header & 143)
-        )
-        return self._m_message_type if hasattr(self, "_m_message_type") else None
