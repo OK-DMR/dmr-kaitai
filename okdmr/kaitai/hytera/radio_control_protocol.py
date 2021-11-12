@@ -15,8 +15,64 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 
 class RadioControlProtocol(KaitaiStruct):
     class ServiceTypes(Enum):
+        button_and_keyboard_operation_request = 65
+        internal_external_mic_enable_disable_request = 67
+        internal_external_mic_gain_check_control_request = 68
+        internal_external_speaker_enable_disable_request = 69
+        volume_check_control_request = 70
+        radio_configure_over_air_request = 192
+        zone_and_channel_operation_request = 196
+        radio_connect_login_request = 202
+        radio_connect_logout_request = 203
+        channel_status_or_param_check_request = 231
+        function_status_check_request = 237
+        function_enable_disable_request = 238
+        channel_alias_request = 305
+        radio_message_query_request = 513
+        channel_number_of_zone_request = 1104
+        update_authentication_key_request = 1105
+        radio_id_and_radio_ip_query_request = 1106
+        radio_check = 2099
+        remote_monitor = 2100
+        allert_call = 2101
         call_request = 2113
+        remove_call_request = 2114
+        delete_subject_line_message_request = 2118
+        radio_disable = 2121
+        radio_enable = 2122
+        radio_status_configure_request = 4295
+        broadcast_status_configuration_request = 4297
+        button_and_keyboard_operation_reply = 32833
+        internal_external_mic_enable_disable_reply = 32835
+        internal_external_mic_gain_check_control_reply = 32836
+        internal_external_speaker_enable_disable_reply = 32837
+        volume_check_control_reply = 32838
+        radio_configure_over_air_reply = 32960
+        zone_and_channel_operation_reply = 32964
+        radio_status_configure_reply = 32967
+        broadcast_status_configuration_reply = 32969
+        radio_connect_login_reply = 32970
+        radio_connect_logout_reply = 32971
+        channel_status_or_param_check_reply = 32999
+        function_status_check_reply = 33005
+        function_enable_disable_reply = 33006
+        channel_alias_reply = 33073
+        radio_message_query_reply = 33281
+        channel_number_of_zone_reply = 33872
+        update_authentication_key_reply = 33873
+        radio_id_and_radio_ip_query_reply = 33874
+        radio_check_ack = 34867
+        remote_monitor_ack = 34868
+        alert_call_ack = 34869
         call_reply = 34881
+        remove_call_reply = 34882
+        delete_subject_line_message_reply = 34886
+        radio_disable_ack = 34889
+        radio_enable_ack = 34890
+        radio_status_report = 45256
+        broadcast_transmit_status = 47171
+        repeater_broadcast_transmit_status = 47173
+        broadcast_receive_status = 47428
 
     class CallTypes(Enum):
         private_call = 0
