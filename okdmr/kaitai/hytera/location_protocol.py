@@ -381,20 +381,3 @@ class LocationProtocol(KaitaiStruct):
         )
         self._io.seek(_pos)
         return self._m_opcode if hasattr(self, "_m_opcode") else None
-
-    @property
-    def opcode_header_int(self):
-        if hasattr(self, "_m_opcode_header_int"):
-            return (
-                self._m_opcode_header_int
-                if hasattr(self, "_m_opcode_header_int")
-                else None
-            )
-
-        _pos = self._io.pos()
-        self._io.seek(0)
-        self._m_opcode_header_int = self._io.read_u2be()
-        self._io.seek(_pos)
-        return (
-            self._m_opcode_header_int if hasattr(self, "_m_opcode_header_int") else None
-        )

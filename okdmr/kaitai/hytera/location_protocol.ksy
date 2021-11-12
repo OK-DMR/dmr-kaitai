@@ -255,6 +255,3 @@ instances:
     pos: 0
     enum: lp_general_types
     type: u1
-  opcode_header_int:
-    pos: 0
-    type: u2be
