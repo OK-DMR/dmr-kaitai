@@ -5,8 +5,8 @@ enums:
   service_types:
     0x0841: call_request
     0x8841: call_reply
-    0x0842: remove_call_request
-    0x8842: remove_call_reply
+    0x0842: remove_radio_request
+    0x8842: remove_radio_reply
     0x10C9: broadcast_status_configuration_request
     0x80C9: broadcast_status_configuration_reply
     0xB843: broadcast_transmit_status
@@ -71,7 +71,7 @@ enums:
     0x06: priority_private_call
     0x07: priority_group_call
     0x08: priority_all_call
-  call_reply_results:
+  reply_results:
     0x00: success
     0x01: failure
 types:
@@ -87,11 +87,43 @@ types:
     seq:
       - id: result
         type: u1
-        enum: call_reply_results
+        enum: reply_results
   generic_data:
     seq:
       - id: data
         size: _parent.message_length
+  remove_radio_request:
+    doc: |
+      Remove Radio Request is used by RCP Application to clear the last call target which was set by Call Request.
+      If there is no call target, this request will do nothing.
+  remove_radio_reply:
+    doc: Response from Dispatch Station
+    seq:
+      - id: result
+        type: u1
+        enum: reply_results
+  broadcast_configuration:
+    seq:
+      - id: config_operation
+        type: u1
+        doc: 0x00 => notifications off 0x01 => notifications on
+      - id: config_target
+        type: u1
+        doc: 0x00 => broadcast transmit status, 0x01 => broadcast receive status, 0x02 => repeater broadcast transmit status
+  broadcast_status_configuration_request:
+    doc: This message is used to enable/disable broadcast transmit/receive status reporting to RCP Application.
+    seq:
+      - id: num_broadcast_configuration
+        type: u1
+      - id: broadcast_configuration
+        type: broadcast_configuration
+        repeat: expr
+        repeat-expr: num_broadcast_configuration
+  broadcast_status_configuration_reply:
+    seq:
+      - id: result
+        type: u1
+        enum: reply_results
 seq:
   - id: service_type
     type: u2le
@@ -105,4 +137,8 @@ seq:
       cases:
         service_types::call_request: call_request
         service_types::call_reply: call_reply
+        service_types::remove_radio_request: remove_radio_request
+        service_types::remove_radio_reply: remove_radio_reply
+        service_types::broadcast_status_configuration_request: broadcast_status_configuration_request
+        service_types::broadcast_status_configuration_reply: broadcast_status_configuration_reply
         _: generic_data

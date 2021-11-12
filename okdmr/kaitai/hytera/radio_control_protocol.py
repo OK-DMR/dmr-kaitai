@@ -36,7 +36,7 @@ class RadioControlProtocol(KaitaiStruct):
         remote_monitor = 2100
         allert_call = 2101
         call_request = 2113
-        remove_call_request = 2114
+        remove_radio_request = 2114
         delete_subject_line_message_request = 2118
         radio_disable = 2121
         radio_enable = 2122
@@ -65,7 +65,7 @@ class RadioControlProtocol(KaitaiStruct):
         remote_monitor_ack = 34868
         alert_call_ack = 34869
         call_reply = 34881
-        remove_call_reply = 34882
+        remove_radio_reply = 34882
         delete_subject_line_message_reply = 34886
         radio_disable_ack = 34889
         radio_enable_ack = 34890
@@ -85,7 +85,7 @@ class RadioControlProtocol(KaitaiStruct):
         priority_group_call = 7
         priority_all_call = 8
 
-    class CallReplyResults(Enum):
+    class ReplyResults(Enum):
         success = 0
         failure = 1
 
@@ -101,12 +101,86 @@ class RadioControlProtocol(KaitaiStruct):
         )
         self.message_length = self._io.read_u2le()
         _on = self.service_type
-        if _on == RadioControlProtocol.ServiceTypes.call_request:
-            self.data = RadioControlProtocol.CallRequest(self._io, self, self._root)
-        elif _on == RadioControlProtocol.ServiceTypes.call_reply:
+        if _on == RadioControlProtocol.ServiceTypes.call_reply:
             self.data = RadioControlProtocol.CallReply(self._io, self, self._root)
+        elif (
+            _on
+            == RadioControlProtocol.ServiceTypes.broadcast_status_configuration_request
+        ):
+            self.data = RadioControlProtocol.BroadcastStatusConfigurationRequest(
+                self._io, self, self._root
+            )
+        elif _on == RadioControlProtocol.ServiceTypes.call_request:
+            self.data = RadioControlProtocol.CallRequest(self._io, self, self._root)
+        elif _on == RadioControlProtocol.ServiceTypes.remove_radio_request:
+            self.data = RadioControlProtocol.RemoveRadioRequest(
+                self._io, self, self._root
+            )
+        elif (
+            _on
+            == RadioControlProtocol.ServiceTypes.broadcast_status_configuration_reply
+        ):
+            self.data = RadioControlProtocol.BroadcastStatusConfigurationReply(
+                self._io, self, self._root
+            )
+        elif _on == RadioControlProtocol.ServiceTypes.remove_radio_reply:
+            self.data = RadioControlProtocol.RemoveRadioReply(
+                self._io, self, self._root
+            )
         else:
             self.data = RadioControlProtocol.GenericData(self._io, self, self._root)
+
+    class BroadcastStatusConfigurationReply(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.result = KaitaiStream.resolve_enum(
+                RadioControlProtocol.ReplyResults, self._io.read_u1()
+            )
+
+    class BroadcastConfiguration(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.config_operation = self._io.read_u1()
+            self.config_target = self._io.read_u1()
+
+    class BroadcastStatusConfigurationRequest(KaitaiStruct):
+        """This message is used to enable/disable broadcast transmit/receive status reporting to RCP Application."""
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.num_broadcast_configuration = self._io.read_u1()
+            self.broadcast_configuration = [None] * (self.num_broadcast_configuration)
+            for i in range(self.num_broadcast_configuration):
+                self.broadcast_configuration[
+                    i
+                ] = RadioControlProtocol.BroadcastConfiguration(
+                    self._io, self, self._root
+                )
+
+    class GenericData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.data = self._io.read_bytes(self._parent.message_length)
 
     class CallRequest(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -121,6 +195,34 @@ class RadioControlProtocol(KaitaiStruct):
             )
             self.target_id = self._io.read_u4le()
 
+    class RemoveRadioReply(KaitaiStruct):
+        """Response from Dispatch Station."""
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.result = KaitaiStream.resolve_enum(
+                RadioControlProtocol.ReplyResults, self._io.read_u1()
+            )
+
+    class RemoveRadioRequest(KaitaiStruct):
+        """Remove Radio Request is used by RCP Application to clear the last call target which was set by Call Request.
+        If there is no call target, this request will do nothing.
+        """
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            pass
+
     class CallReply(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -130,15 +232,5 @@ class RadioControlProtocol(KaitaiStruct):
 
         def _read(self):
             self.result = KaitaiStream.resolve_enum(
-                RadioControlProtocol.CallReplyResults, self._io.read_u1()
+                RadioControlProtocol.ReplyResults, self._io.read_u1()
             )
-
-    class GenericData(KaitaiStruct):
-        def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
-            self._parent = _parent
-            self._root = _root if _root else self
-            self._read()
-
-        def _read(self):
-            self.data = self._io.read_bytes(self._parent.message_length)
