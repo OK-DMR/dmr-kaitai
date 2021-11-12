@@ -89,7 +89,7 @@ class DataTransmitProtocol(KaitaiStruct):
             self.file_size = self._io.read_u2be()
             self.file_name = (
                 self._io.read_bytes((self._parent.message_length - 10))
-            ).decode(u"UTF16-LE")
+            ).decode(u"UTF-16LE")
 
     class DataSliceAnswer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

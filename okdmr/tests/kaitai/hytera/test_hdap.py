@@ -13,8 +13,8 @@ def test_hdap():
         # this is immediate location with RSSI, currently unsupported PDU
         # "08a0030034000000000a2338630000413131323534303237303932314e353030332e383734364530313432362e35313932302e32323533ff1cae03",
     ]
-    for rrs in hexmessages:
-        prettyprint(HyteraDmrApplicationProtocol.from_bytes(bytes.fromhex(rrs)))
+    for hexmsg in hexmessages:
+        prettyprint(HyteraDmrApplicationProtocol.from_bytes(bytes.fromhex(hexmsg)))
 
 
 if __name__ == "__main__":

@@ -118,7 +118,7 @@ class TelemetryProtocol(KaitaiStruct):
             )
             self.message_length = self._io.read_u2be()
             self.message = (self._io.read_bytes(self.message_length)).decode(
-                u"UTF16-LE"
+                u"UTF-16LE"
             )
 
     class RemoteControlAnswer(KaitaiStruct):

@@ -5,7 +5,7 @@ from okdmr.tests.kaitai.tests_utils import prettyprint
 
 
 def test_mototrbo_text_messages():
-    hexstrings: List[str] = ["0010e00093040d000a00410048004f004a00"]
+    hexmessages: List[str] = ["0010e00093040d000a00410048004f004a00"]
 
-    for message_hex in hexstrings:
-        prettyprint(TextMessageProtocol.from_bytes(bytes.fromhex(message_hex)))
+    for hexmsg in hexmessages:
+        prettyprint(TextMessageProtocol.from_bytes(bytes.fromhex(hexmsg)))

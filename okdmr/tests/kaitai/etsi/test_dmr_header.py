@@ -5,11 +5,11 @@ from okdmr.tests.kaitai.tests_utils import prettyprint
 
 
 def test_dmr_data_headers():
-    hexstrings: List[str] = [
+    hexmessages: List[str] = [
         "4da323383b23383b05608040",
     ]
 
-    for header_hex in hexstrings:
-        header = DmrDataHeader.from_bytes(bytes.fromhex(header_hex))
+    for hexmsg in hexmessages:
+        header = DmrDataHeader.from_bytes(bytes.fromhex(hexmsg))
         prettyprint(header)
         prettyprint(header.data)

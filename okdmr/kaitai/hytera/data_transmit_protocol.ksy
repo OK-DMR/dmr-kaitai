@@ -28,7 +28,7 @@ types:
       - id: file_name
         type: str
         size: _parent.message_length - 10
-        encoding: UTF16-LE
+        encoding: UTF-16LE
         doc: maximum of 256 bytes including file extension, if longer, recipient should refuse the transmission
   dtp_answer:
     seq:

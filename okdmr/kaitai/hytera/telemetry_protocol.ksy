@@ -45,7 +45,7 @@ types:
         type: u2be
       - id: message
         type: str
-        encoding: UTF16-LE
+        encoding: UTF-16LE
         size: message_length
   standard_status_request:
     seq:

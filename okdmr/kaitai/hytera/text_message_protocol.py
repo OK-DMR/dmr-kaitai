@@ -84,11 +84,25 @@ class TextMessageProtocol(KaitaiStruct):
         if (
             self.service_type == TextMessageProtocol.ServiceTypes.send_private_message
         ) or (self.service_type == TextMessageProtocol.ServiceTypes.send_group_message):
-            self.tmdata = (self._io.read_bytes_term(0, False, True, True)).decode(
-                u"UTF16-LE"
-            )
+            self.tmdata = (
+                self._io.read_bytes(
+                    ((((self.message_length - 4) - 4) - 4) - self.option_sum_len)
+                )
+            ).decode(u"UTF-16LE")
 
         if self.option_flag.value == 1:
             self.option_field = (self._io.read_bytes(self.option_field_len)).decode(
-                u"UTF16-LE"
+                u"UTF-16LE"
             )
+
+    @property
+    def option_sum_len(self):
+        if hasattr(self, "_m_option_sum_len"):
+            return (
+                self._m_option_sum_len if hasattr(self, "_m_option_sum_len") else None
+            )
+
+        self._m_option_sum_len = (
+            (self.option_field_len + 2) if self.option_flag.value == 1 else 0
+        )
+        return self._m_option_sum_len if hasattr(self, "_m_option_sum_len") else None

@@ -27,6 +27,9 @@ enums:
     10: no_contact
     11: tx_deny
     12: tx_interrupted
+instances:
+  option_sum_len:
+    value: 'option_flag.to_i == 1 ? option_field_len + 2 : 0'
 seq:
   - id: ack_flag
     type: b1
@@ -61,11 +64,12 @@ seq:
     if: service_type == service_types::send_private_message_ack or service_type == service_types::send_group_message_ack
   - id: tmdata
     type: str
-    encoding: UTF16-LE
-    terminator: 0
+    encoding: UTF-16LE
+    # message_len - req_id - dest_ip - source_ip - (2+option_field_len or 0)
+    size: message_length - 4 - 4 - 4 - option_sum_len
     if: service_type == service_types::send_private_message or service_type == service_types::send_group_message
   - id: option_field
     type: str
-    encoding: UTF16-LE
+    encoding: UTF-16LE
     size: option_field_len
     if: option_flag.to_i == 1
