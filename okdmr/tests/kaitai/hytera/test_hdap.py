@@ -8,10 +8,12 @@ from okdmr.tests.kaitai.tests_utils import prettyprint
 
 def test_hdap():
     hexmessages: List[str] = [
+        # radio registration request
         "11000300040a2338636303",
+        # radio registration ack
         "11008000090a2338630000000708d203",
-        # this is immediate location with RSSI, currently unsupported PDU
-        # "08a0030034000000000a2338630000413131323534303237303932314e353030332e383734364530313432362e35313932302e32323533ff1cae03",
+        # location protocol
+        "08a0030034000000000a2338630000413131323534303237303932314e353030332e383734364530313432362e35313932302e32323533ff1cae03",
     ]
     for hexmsg in hexmessages:
         prettyprint(HyteraDmrApplicationProtocol.from_bytes(bytes.fromhex(hexmsg)))

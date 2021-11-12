@@ -23,7 +23,7 @@ seq:
     size: 10
     doc: DDDMM.MMMM D=degree(0-180) M=minute(0-59.9999)
   - id: speed
-    size: 2
+    size: 3
     doc: speed in knots, eg. 0.2
   - id: direction
     size: 3

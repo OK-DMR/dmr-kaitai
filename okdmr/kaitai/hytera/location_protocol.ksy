@@ -1,5 +1,6 @@
 meta:
   id: location_protocol
+  endian: be
   imports:
     - radio_ip
     - datetimestring
@@ -11,9 +12,12 @@ enums:
     0xB0: emergency_location_reporting_service
     0xC0: triggered_location_reporting_service
     0xD0: condition_triggered_reporting_service
+    0xE0: rssi_report_configuring_service
   lp_specific_types:
     0xA001: standard_request
     0xA002: standard_answer
+    0xA003: standard_answer_with_rssi
+    0xA004: standard_answer_gps_bt
     0xB001: emergency_report_stop_request
     0xB002: emergency_report_stop_answer
     0xB003: emergency_report
@@ -42,16 +46,18 @@ enums:
     0x69: request_format_error
 seq:
   - id: opcode_header
-    size: 2
+    type: u2be
+    enum: lp_specific_types
   - id: message_length
     type: u2be
     doc: length of the message from next field to the end of LP message
   - id: data
     type:
-      switch-on: opcode_header_int
+      switch-on: opcode_header
       cases:
         lp_specific_types::standard_request: standard_request
         lp_specific_types::standard_answer: standard_answer
+        lp_specific_types::standard_answer_with_rssi: standard_answer_with_rssi
         lp_specific_types::emergency_report_stop_request: emergency_report_stop_request
         lp_specific_types::emergency_report_stop_answer: emergency_report_stop_answer
         lp_specific_types::emergency_report: emergency_report
@@ -83,6 +89,20 @@ types:
         enum: result_codes
       - id: gpsdata
         type: gpsdata
+  standard_answer_with_rssi:
+    seq:
+      - id: request_id
+        type: u4be
+      - id: radio_ip
+        type: radio_ip
+      - id: result
+        type: u2be
+        enum: result_codes
+      - id: gpsdata
+        type: gpsdata
+      - id: rssi_value
+        type: s2be
+        doc: -240-0
   emergency_report_stop_request:
     seq:
       - id: request_id
@@ -237,5 +257,4 @@ instances:
     type: u1
   opcode_header_int:
     pos: 0
-    enum: lp_specific_types
     type: u2be

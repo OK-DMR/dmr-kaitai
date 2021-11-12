@@ -13,8 +13,8 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
     )
 
 from okdmr.kaitai.hytera import radio_ip
-from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import datetimestring
+from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import intervalstring
 
 
@@ -26,6 +26,8 @@ class LocationProtocol(KaitaiStruct):
     class LpSpecificTypes(Enum):
         standard_request = 40961
         standard_answer = 40962
+        standard_answer_with_rssi = 40963
+        standard_answer_gps_bt = 40964
         emergency_report_stop_request = 45057
         emergency_report_stop_answer = 45058
         emergency_report = 45059
@@ -45,6 +47,7 @@ class LocationProtocol(KaitaiStruct):
         emergency_location_reporting_service = 176
         triggered_location_reporting_service = 192
         condition_triggered_reporting_service = 208
+        rssi_report_configuring_service = 224
 
     class TriggerTypes(Enum):
         cancel_request = 0
@@ -65,9 +68,11 @@ class LocationProtocol(KaitaiStruct):
         self._read()
 
     def _read(self):
-        self.opcode_header = self._io.read_bytes(2)
+        self.opcode_header = KaitaiStream.resolve_enum(
+            LocationProtocol.LpSpecificTypes, self._io.read_u2be()
+        )
         self.message_length = self._io.read_u2be()
-        _on = self.opcode_header_int
+        _on = self.opcode_header
         if _on == LocationProtocol.LpSpecificTypes.triggered_report_answer:
             self.data = LocationProtocol.TriggeredReportAnswer(
                 self._io, self, self._root
@@ -98,6 +103,10 @@ class LocationProtocol(KaitaiStruct):
             self.data = LocationProtocol.TriggeredReport(self._io, self, self._root)
         elif _on == LocationProtocol.LpSpecificTypes.triggered_report_stop_answer:
             self.data = LocationProtocol.TriggeredReportStopAnswer(
+                self._io, self, self._root
+            )
+        elif _on == LocationProtocol.LpSpecificTypes.standard_answer_with_rssi:
+            self.data = LocationProtocol.StandardAnswerWithRssi(
                 self._io, self, self._root
             )
         elif _on == LocationProtocol.LpSpecificTypes.triggered_report_stop_request:
@@ -205,6 +214,22 @@ class LocationProtocol(KaitaiStruct):
             self.result = KaitaiStream.resolve_enum(
                 LocationProtocol.ResultCodes, self._io.read_u2be()
             )
+
+    class StandardAnswerWithRssi(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.request_id = self._io.read_u4be()
+            self.radio_ip = radio_ip.RadioIp(self._io)
+            self.result = KaitaiStream.resolve_enum(
+                LocationProtocol.ResultCodes, self._io.read_u2be()
+            )
+            self.gpsdata = gpsdata.Gpsdata(self._io)
+            self.rssi_value = self._io.read_s2be()
 
     class QuickGpsPayload(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -368,9 +393,7 @@ class LocationProtocol(KaitaiStruct):
 
         _pos = self._io.pos()
         self._io.seek(0)
-        self._m_opcode_header_int = KaitaiStream.resolve_enum(
-            LocationProtocol.LpSpecificTypes, self._io.read_u2be()
-        )
+        self._m_opcode_header_int = self._io.read_u2be()
         self._io.seek(_pos)
         return (
             self._m_opcode_header_int if hasattr(self, "_m_opcode_header_int") else None

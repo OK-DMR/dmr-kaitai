@@ -85,6 +85,7 @@ class HyteraDmrApplicationProtocol(KaitaiStruct):
 
     @property
     def is_reliable_message(self):
+        """first bit of message_header indicates if the message is reliable."""
         if hasattr(self, "_m_is_reliable_message"):
             return (
                 self._m_is_reliable_message

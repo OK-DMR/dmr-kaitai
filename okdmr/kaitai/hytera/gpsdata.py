@@ -27,5 +27,5 @@ class Gpsdata(KaitaiStruct):
         self.latitude = self._io.read_bytes(9)
         self.east_west = self._io.read_bytes(1)
         self.longitude = self._io.read_bytes(10)
-        self.speed = self._io.read_bytes(2)
+        self.speed = self._io.read_bytes(3)
         self.direction = self._io.read_bytes(3)
