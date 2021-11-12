@@ -27,13 +27,13 @@ seq:
     type: u2be
     doc: number equal for ACK and retransmited messages, and raised for each reply/new message
   - id: options
-    if: not _io.eof and not is_heartbeat
+    if: not _io.eof and not is_heartbeat and has_option
     type: option
     repeat: until
     repeat-until: not _.expect_more_options
   - id: data
     type: hytera_dmr_application_protocol
-    if: not _io.eof and has_option == true and not is_reject and not is_close and not is_connect
+    if: not _io.eof and not is_reject and not is_close and not is_connect
     repeat: eos
   - id: extra_data
     size-eos: true

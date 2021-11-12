@@ -43,7 +43,11 @@ class HyteraSimpleTransportReliabilityProtocol(KaitaiStruct):
         self.is_ack = self._io.read_bits_int_be(1) != 0
         self._io.align_to_byte()
         self.sequence_number = self._io.read_u2be()
-        if (not (self._io.is_eof())) and (not (self.is_heartbeat)):
+        if (
+            (not (self._io.is_eof()))
+            and (not (self.is_heartbeat))
+            and (self.has_option)
+        ):
             self.options = []
             i = 0
             while True:
@@ -57,7 +61,6 @@ class HyteraSimpleTransportReliabilityProtocol(KaitaiStruct):
 
         if (
             (not (self._io.is_eof()))
-            and (self.has_option == True)
             and (not (self.is_reject))
             and (not (self.is_close))
             and (not (self.is_connect))
