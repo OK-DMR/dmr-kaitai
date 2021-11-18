@@ -15,6 +15,7 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 
 class RadioControlProtocol(KaitaiStruct):
     class ServiceTypes(Enum):
+        radio_identification_request = 4
         button_and_keyboard_operation_request = 65
         internal_external_mic_enable_disable_request = 67
         internal_external_mic_gain_check_control_request = 68
@@ -58,6 +59,7 @@ class RadioControlProtocol(KaitaiStruct):
         function_enable_disable_reply = 33006
         channel_alias_reply = 33073
         radio_message_query_reply = 33281
+        radio_identification_reply = 33492
         channel_number_of_zone_reply = 33872
         update_authentication_key_reply = 33873
         radio_id_and_radio_ip_query_reply = 33874
@@ -103,6 +105,10 @@ class RadioControlProtocol(KaitaiStruct):
         _on = self.service_type
         if _on == RadioControlProtocol.ServiceTypes.call_reply:
             self.data = RadioControlProtocol.CallReply(self._io, self, self._root)
+        elif _on == RadioControlProtocol.ServiceTypes.radio_identification_reply:
+            self.data = RadioControlProtocol.RadioIdentificationReply(
+                self._io, self, self._root
+            )
         elif (
             _on
             == RadioControlProtocol.ServiceTypes.broadcast_status_configuration_request
@@ -171,6 +177,23 @@ class RadioControlProtocol(KaitaiStruct):
                 ] = RadioControlProtocol.BroadcastConfiguration(
                     self._io, self, self._root
                 )
+
+    class RadioIdentificationReply(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            if self._parent.message_length >= 6:
+                self.header = self._io.read_bytes(6)
+
+            if self._parent.message_length >= 198:
+                self.text = (self._io.read_bytes(192)).decode(u"utf-16-be")
+
+            if self._parent.message_length >= 206:
+                self.footer = self._io.read_bytes(8)
 
     class GenericData(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

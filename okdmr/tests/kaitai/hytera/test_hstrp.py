@@ -28,7 +28,6 @@ def test_hstrp():
         "32420020000183040001869f0401010900a2000d30000002000000640001869f00c703",
     ]
     for hexmsg in hexmessages:
-        print(hexmsg)
         prettyprint(
             HyteraSimpleTransportReliabilityProtocol.from_bytes(bytes.fromhex(hexmsg))
         )

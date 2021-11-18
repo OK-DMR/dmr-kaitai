@@ -3,6 +3,8 @@ meta:
   endian: le
 enums:
   service_types:
+    0x0004: radio_identification_request
+    0x82D4: radio_identification_reply
     0x0841: call_request
     0x8841: call_reply
     0x0842: remove_radio_request
@@ -124,6 +126,19 @@ types:
       - id: result
         type: u1
         enum: reply_results
+  radio_identification_reply:
+    seq:
+      - id: header
+        size: 6
+        if: _parent.message_length >= 6
+      - id: text
+        type: str
+        size: 192
+        encoding: utf-16-be
+        if: _parent.message_length >= 198
+      - id: footer
+        size: 8
+        if: _parent.message_length >= 206
 seq:
   - id: service_type
     type: u2le
@@ -141,4 +156,5 @@ seq:
         service_types::remove_radio_reply: remove_radio_reply
         service_types::broadcast_status_configuration_request: broadcast_status_configuration_request
         service_types::broadcast_status_configuration_reply: broadcast_status_configuration_reply
+        service_types::radio_identification_reply: radio_identification_reply
         _: generic_data

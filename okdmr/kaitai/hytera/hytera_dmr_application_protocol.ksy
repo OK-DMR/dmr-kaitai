@@ -24,8 +24,7 @@ types:
         size-eos: true
 instances:
   is_reliable_message:
-    type: b1
-    pos: 0
+    value: (message_header.to_i & 0b10000000) >> 7
     doc: first bit of message_header indicates if the message is reliable
 seq:
   - id: message_header

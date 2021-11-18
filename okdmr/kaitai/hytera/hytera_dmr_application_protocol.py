@@ -12,13 +12,13 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
         % (kaitaistruct.__version__)
     )
 
+from okdmr.kaitai.hytera import radio_control_protocol
 from okdmr.kaitai.hytera import data_delivery_states
 from okdmr.kaitai.hytera import telemetry_protocol
 from okdmr.kaitai.hytera import text_message_protocol
 from okdmr.kaitai.hytera import location_protocol
 from okdmr.kaitai.hytera import radio_registration_service
 from okdmr.kaitai.hytera import data_transmit_protocol
-from okdmr.kaitai.hytera import radio_control_protocol
 
 
 class HyteraDmrApplicationProtocol(KaitaiStruct):
@@ -93,10 +93,7 @@ class HyteraDmrApplicationProtocol(KaitaiStruct):
                 else None
             )
 
-        _pos = self._io.pos()
-        self._io.seek(0)
-        self._m_is_reliable_message = self._io.read_bits_int_be(1) != 0
-        self._io.seek(_pos)
+        self._m_is_reliable_message = (self.message_header.value & 128) >> 7
         return (
             self._m_is_reliable_message
             if hasattr(self, "_m_is_reliable_message")
