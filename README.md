@@ -1,5 +1,11 @@
 # DMR Kaitai protocols
 
+![Python versions](https://img.shields.io/pypi/pyversions/dmr-kaitai?style=flat-square)
+![Wheel](https://img.shields.io/pypi/wheel/dmr-kaitai?style=flat-square)
+![Last released version](https://img.shields.io/pypi/v/dmr-kaitai?style=flat-square)
+![PyPI downloads](https://img.shields.io/pypi/dm/dmr-kaitai?style=flat-square)
+![License](https://img.shields.io/pypi/l/dmr-kaitai?style=flat-square)
+
 This repository contains [Kaitai-IO](https://kaitai.io/) definitions of various protocols that can be met in DMR networks, both amateur and professional
 
 ## Contributing
