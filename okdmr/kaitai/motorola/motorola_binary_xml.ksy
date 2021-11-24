@@ -39,6 +39,14 @@ types:
         type: uintvar
       - id: fraction_payload
         type: uintvar
+  sfloatvar:
+    doc: |
+      Variable length signed float, first sintvar (signed integer part) then uintvar (unsigned fraction part)
+    seq:
+      - id: sint_payload
+        type: sintvar
+      - id: fraction_payload
+        type: uintvar
 seq:
   - id: document_id
     enum: docids

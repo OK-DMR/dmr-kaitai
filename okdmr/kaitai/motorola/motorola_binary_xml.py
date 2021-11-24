@@ -95,3 +95,18 @@ class MotorolaBinaryXml(KaitaiStruct):
             self.fraction_payload = MotorolaBinaryXml.Uintvar(
                 self._io, self, self._root
             )
+
+    class Sfloatvar(KaitaiStruct):
+        """Variable length signed float, first sintvar (signed integer part) then uintvar (unsigned fraction part)"""
+
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.sint_payload = MotorolaBinaryXml.Sintvar(self._io, self, self._root)
+            self.fraction_payload = MotorolaBinaryXml.Uintvar(
+                self._io, self, self._root
+            )

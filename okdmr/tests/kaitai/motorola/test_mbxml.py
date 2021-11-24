@@ -1,5 +1,10 @@
 from okdmr.kaitai.motorola.motorola_binary_xml import MotorolaBinaryXml
-from okdmr.kaitai.motorola.motorola_utils import uintvar_to_int, sintvar_to_int, ufloatvar_to_float
+from okdmr.kaitai.motorola.motorola_utils import (
+    uintvar_to_int,
+    sintvar_to_int,
+    ufloatvar_to_float,
+    sfloatvar_to_float,
+)
 from okdmr.tests.kaitai.tests_utils import prettyprint
 
 LRRP_XML: str = """
@@ -46,10 +51,31 @@ def test_ufloatvar():
     ]
     for t in ufloatvars:
         ufloat = MotorolaBinaryXml.Ufloatvar.from_bytes(bytes.fromhex(t[1]))
-        not_rounded: float = ufloatvar_to_float(ufloat.uint_payload.payload, ufloat.fraction_payload.payload)
+        not_rounded: float = ufloatvar_to_float(
+            ufloat.uint_payload.payload, ufloat.fraction_payload.payload
+        )
         precision: int = t[2]
         print(
             f"ufloat raw: {not_rounded}, test precision: {precision} decimals, rounded: {round(not_rounded, precision)}"
+            f" | reference raw: {t[0]}, rounded: {round(t[0], precision)}"
+        )
+        assert round(not_rounded, precision) == round(t[0], precision)
+
+
+def test_sfloatvar():
+    # tuples (decoded, encoded, accuracy)
+    sfloatvars = [
+        (-37 - (64 / 128), "6540", 1),
+        (-160 - (983 / (128 ** 2)), "C1208757", 1),
+    ]
+    for t in sfloatvars:
+        sfloat = MotorolaBinaryXml.Sfloatvar.from_bytes(bytes.fromhex(t[1]))
+        not_rounded: float = sfloatvar_to_float(
+            sfloat.sint_payload.payload, sfloat.fraction_payload.payload
+        )
+        precision: int = t[2]
+        print(
+            f"sfloat raw: {not_rounded}, test precision: {precision} decimals, rounded: {round(not_rounded, precision)}"
             f" | reference raw: {t[0]}, rounded: {round(t[0], precision)}"
         )
         assert round(not_rounded, precision) == round(t[0], precision)

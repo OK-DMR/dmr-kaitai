@@ -21,4 +21,14 @@ def sintvar_to_int(payload: List[int]) -> int:
 
 
 def ufloatvar_to_float(int_part: List[int], fraction_part: List[int]) -> float:
-    return uintvar_to_int(int_part) + (uintvar_to_int(fraction_part) / 128 ** len(fraction_part))
+    return uintvar_to_int(int_part) + (
+        uintvar_to_int(fraction_part) / 128 ** len(fraction_part)
+    )
+
+
+def sfloatvar_to_float(sint_part: List[int], fraction_part: List[int]) -> float:
+    _out: float = clear_msb(uintvar_to_int(sint_part)) + (
+        uintvar_to_int(fraction_part) / 128 ** len(fraction_part)
+    )
+    _is_negative = (sint_part[0] & 0x40) > 0
+    return -_out if _is_negative else _out
