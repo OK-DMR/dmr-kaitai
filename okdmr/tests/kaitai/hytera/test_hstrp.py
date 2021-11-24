@@ -33,7 +33,7 @@ def test_hstrp():
         # check request
         "32420000001502e700020009013f03",
         # check reply
-        "32420020001b83040001869f04010102e780070000010938ffffff8503"
+        "32420020001b83040001869f04010102e780070000010938ffffff8503",
     ]
     for hexmsg in hexmessages:
         prettyprint(
