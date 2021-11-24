@@ -7,18 +7,6 @@ from okdmr.kaitai.motorola.motorola_utils import (
 )
 from okdmr.tests.kaitai.tests_utils import prettyprint
 
-LRRP_XML: str = """
-<Immediate-Location-Request>
-<request-id>2468ACE0</request-id>
-<query-info>
-<ret-info ret-info-time="YES" ret-info-accuracy="YES"/>
-<request-speed-hor/>
-</query-info>
-</Immediate-Location-Request>
-"""
-
-LRRP_MBXML: bytes = bytes.fromhex("050822042468ace05162")
-
 
 def test_uintvar():
     # tuples (decoded, encoded)
@@ -82,4 +70,15 @@ def test_sfloatvar():
 
 
 def test_decode():
-    prettyprint(MotorolaBinaryXml.from_bytes(LRRP_MBXML))
+    lrrp_xml: str = """
+    <Immediate-Location-Request>
+    <request-id>2468ACE0</request-id>
+    <query-info>
+    <ret-info ret-info-time="YES" ret-info-accuracy="YES"/>
+    <request-speed-hor/>
+    </query-info>
+    </Immediate-Location-Request>
+    """
+
+    lrrp_mbxml: bytes = bytes.fromhex("050822042468ace05162")
+    prettyprint(MotorolaBinaryXml.from_bytes(lrrp_mbxml))
