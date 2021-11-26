@@ -1,5 +1,6 @@
 meta:
   id: gpsdata
+
 seq:
   - id: gps_status
     size: 1
@@ -28,3 +29,7 @@ seq:
   - id: direction
     size: 3
     doc: azimuth(0-359), 0=north, increase is clockwise
+
+instances:
+    gps_available:
+        value: gps_status.to_s('ASCII') == 'A'
