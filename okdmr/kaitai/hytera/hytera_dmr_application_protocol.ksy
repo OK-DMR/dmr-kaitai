@@ -22,13 +22,13 @@ types:
     seq:
       - id: data
         size-eos: true
-instances:
-  is_reliable_message:
-    value: (message_header.to_i & 0b10000000) >> 7
-    doc: first bit of message_header indicates if the message is reliable
+
 seq:
+  - id: is_reliable_message
+    type: b1
+    doc: first bit of message_header indicates if the message is reliable
   - id: message_header
-    type: u1
+    type: b7
     enum: message_header_types
   - id: data
     doc: |
