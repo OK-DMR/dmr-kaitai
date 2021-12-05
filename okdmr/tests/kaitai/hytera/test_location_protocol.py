@@ -7,7 +7,6 @@ from okdmr.tests.kaitai.tests_utils import prettyprint
 
 
 class TestLocationProtocl(unittest.TestCase):
-
     def test_lp(self):
         hexmessages: List[str] = [
             # location protocol
@@ -30,8 +29,13 @@ class TestLocationProtocl(unittest.TestCase):
         message = LocationProtocol.from_bytes(bytes.fromhex(hex_location_germany))
 
         # Assert properties from LocationProtocol
-        self.assertEqual(message.opcode_header, LocationProtocol.LpSpecificTypes.standard_answer)
-        self.assertEqual(message.opcode, LocationProtocol.LpGeneralTypes.standard_location_immediate_service)
+        self.assertEqual(
+            message.opcode_header, LocationProtocol.LpSpecificTypes.standard_answer
+        )
+        self.assertEqual(
+            message.opcode,
+            LocationProtocol.LpGeneralTypes.standard_location_immediate_service,
+        )
 
         # Assert properties in Standard Answer
         self.assertEqual(message.data.result, LocationProtocol.ResultCodes.ok)
@@ -40,18 +44,19 @@ class TestLocationProtocl(unittest.TestCase):
 
         # Assert properties in gps payload
         gps_msg = message.data.gpsdata
-        self.assertEqual(gps_msg.gps_status.decode('ascii'), 'A')
-        self.assertEqual(gps_msg.gps_date.decode('ascii'), '311018')
-        self.assertEqual(gps_msg.gps_time.decode('ascii'), '162223')
-        self.assertEqual(gps_msg.east_west.decode('ascii'), 'E')
-        self.assertEqual(gps_msg.longitude.decode('ascii'), '00739.2680')
-        self.assertEqual(gps_msg.north_south.decode('ascii'), 'N')
-        self.assertEqual(gps_msg.latitude.decode('ascii'), '4736.6977')
-        self.assertEqual(gps_msg.direction.decode('ascii'), '005')
-        self.assertEqual(gps_msg.speed.decode('ascii'), '0.0')
+        self.assertEqual(gps_msg.gps_status.decode("ascii"), "A")
+        self.assertEqual(gps_msg.gps_date.decode("ascii"), "311018")
+        self.assertEqual(gps_msg.gps_time.decode("ascii"), "162223")
+        self.assertEqual(gps_msg.east_west.decode("ascii"), "E")
+        self.assertEqual(gps_msg.longitude.decode("ascii"), "00739.2680")
+        self.assertEqual(gps_msg.north_south.decode("ascii"), "N")
+        self.assertEqual(gps_msg.latitude.decode("ascii"), "4736.6977")
+        self.assertEqual(gps_msg.direction.decode("ascii"), "005")
+        self.assertEqual(gps_msg.speed.decode("ascii"), "0.0")
 
         # Payload instances
         self.assertTrue(gps_msg.gps_available)
+
 
 if __name__ == "__main__":
     unittest.main()

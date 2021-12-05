@@ -5,8 +5,12 @@ import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if parse_version(kaitaistruct.__version__) < parse_version('0.9'):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
+if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+    raise Exception(
+        "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
+        % (kaitaistruct.__version__)
+    )
+
 
 class Gpsdata(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
@@ -28,10 +32,8 @@ class Gpsdata(KaitaiStruct):
 
     @property
     def gps_available(self):
-        if hasattr(self, '_m_gps_available'):
-            return self._m_gps_available if hasattr(self, '_m_gps_available') else None
+        if hasattr(self, "_m_gps_available"):
+            return self._m_gps_available if hasattr(self, "_m_gps_available") else None
 
         self._m_gps_available = (self.gps_status).decode(u"ASCII") == u"A"
-        return self._m_gps_available if hasattr(self, '_m_gps_available') else None
-
-
+        return self._m_gps_available if hasattr(self, "_m_gps_available") else None

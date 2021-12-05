@@ -13,7 +13,7 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
     )
 
 
-class LinkControl(KaitaiStruct):
+class FullLinkControl(KaitaiStruct):
     """ETSI TS 102 361-2 V2.4.1 (2017-10), Section 7.1.1"""
 
     class Flcos(Enum):
@@ -61,39 +61,42 @@ class LinkControl(KaitaiStruct):
         self.protect_flag = self._io.read_bits_int_be(1) != 0
         self.reserved = self._io.read_bits_int_be(1) != 0
         self.full_link_control_opcode = KaitaiStream.resolve_enum(
-            LinkControl.Flcos, self._io.read_bits_int_be(6)
+            FullLinkControl.Flcos, self._io.read_bits_int_be(6)
         )
         self.feature_set_id = KaitaiStream.resolve_enum(
-            LinkControl.FeatureSetIds, self._io.read_bits_int_be(8)
+            FullLinkControl.FeatureSetIds, self._io.read_bits_int_be(8)
         )
         self._io.align_to_byte()
         _on = self.full_link_control_opcode
-        if _on == LinkControl.Flcos.talker_alias_header:
-            self.specific_data = LinkControl.TalkerAliasHeader(
+        if _on == FullLinkControl.Flcos.talker_alias_header:
+            self.specific_data = FullLinkControl.TalkerAliasHeader(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.unit_to_unit_voice:
-            self.specific_data = LinkControl.UnitToUnitVoiceChannelUser(
+        elif _on == FullLinkControl.Flcos.unit_to_unit_voice:
+            self.specific_data = FullLinkControl.UnitToUnitVoiceChannelUser(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.group_voice:
-            self.specific_data = LinkControl.GroupVoiceChannelUser(
+        elif _on == FullLinkControl.Flcos.group_voice:
+            self.specific_data = FullLinkControl.GroupVoiceChannelUser(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.talker_alias_block3:
-            self.specific_data = LinkControl.TalkerAliasContinuation(
+        elif _on == FullLinkControl.Flcos.talker_alias_block3:
+            self.specific_data = FullLinkControl.TalkerAliasContinuation(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.talker_alias_block1:
-            self.specific_data = LinkControl.TalkerAliasContinuation(
+        elif _on == FullLinkControl.Flcos.talker_alias_block1:
+            self.specific_data = FullLinkControl.TalkerAliasContinuation(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.talker_alias_block2:
-            self.specific_data = LinkControl.TalkerAliasContinuation(
+        elif _on == FullLinkControl.Flcos.talker_alias_block2:
+            self.specific_data = FullLinkControl.TalkerAliasContinuation(
                 self._io, self, self._root
             )
-        elif _on == LinkControl.Flcos.gps_info:
-            self.specific_data = LinkControl.GpsInfoLcPdu(self._io, self, self._root)
+        elif _on == FullLinkControl.Flcos.gps_info:
+            self.specific_data = FullLinkControl.GpsInfoLcPdu(
+                self._io, self, self._root
+            )
+        self.crc_checksum = self._io.read_bytes(3)
 
     class GpsInfoLcPdu(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -105,7 +108,7 @@ class LinkControl(KaitaiStruct):
         def _read(self):
             self.reserved = self._io.read_bits_int_be(4)
             self.position_error = KaitaiStream.resolve_enum(
-                LinkControl.PositionErrors, self._io.read_bits_int_be(3)
+                FullLinkControl.PositionErrors, self._io.read_bits_int_be(3)
             )
             self.longitude = self._io.read_bits_int_be(25)
             self.latitude = self._io.read_bits_int_be(24)
@@ -143,7 +146,7 @@ class LinkControl(KaitaiStruct):
 
         def _read(self):
             self.talker_alias_data_format = KaitaiStream.resolve_enum(
-                LinkControl.TalkerDataFormats, self._io.read_bits_int_be(2)
+                FullLinkControl.TalkerDataFormats, self._io.read_bits_int_be(2)
             )
             self.talker_alias_data_length = self._io.read_bits_int_be(5)
             self.talker_alias_data = self._io.read_bits_int_be(49)

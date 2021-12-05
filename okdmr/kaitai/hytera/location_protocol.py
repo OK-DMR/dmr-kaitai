@@ -13,8 +13,8 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
     )
 
 from okdmr.kaitai.hytera import radio_ip
-from okdmr.kaitai.hytera import datetimestring
 from okdmr.kaitai.hytera import gpsdata
+from okdmr.kaitai.hytera import datetimestring
 from okdmr.kaitai.hytera import intervalstring
 
 

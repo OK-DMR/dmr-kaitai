@@ -1,5 +1,5 @@
 meta:
-  id: link_control
+  id: full_link_control
   endian: le
 doc: |
   ETSI TS 102 361-2 V2.4.1 (2017-10), Section 7.1.1
@@ -101,3 +101,6 @@ seq:
         'flcos::talker_alias_block1': talker_alias_continuation
         'flcos::talker_alias_block2': talker_alias_continuation
         'flcos::talker_alias_block3': talker_alias_continuation
+  - id: crc_checksum
+    doc: 3 bytes of Reed-Solomon CRC with applied CRC mask per B.3.12 Data Type CRC Mask
+    size: 3
