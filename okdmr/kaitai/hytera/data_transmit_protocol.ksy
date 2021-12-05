@@ -8,7 +8,7 @@ enums:
   service_specific_types:
     0x01: dtp_request
     0x11: dtp_answer
-    0x02: data_slice_trasmit
+    0x02: data_slice_transmit
     0x12: data_slice_answer
     0x03: last_data_slice
     0x13: last_data_slice_answer
