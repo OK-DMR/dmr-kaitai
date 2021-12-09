@@ -21,7 +21,7 @@ class DataTransmitProtocol(KaitaiStruct):
 
     class ServiceSpecificTypes(Enum):
         dtp_request = 1
-        data_slice_trasmit = 2
+        data_slice_transmit = 2
         last_data_slice = 3
         dtp_answer = 17
         data_slice_answer = 18

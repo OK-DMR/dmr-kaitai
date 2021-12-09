@@ -19,7 +19,7 @@ def test_lp():
         # Condition report, no data
         "d0010039200000020a03640e04000003e830303030303030303030303030303030303030303030303030303030303030303031303030303030303832304d03",
         # Received from repeater
-        "d0040034000015c80a0000030000413138343033303036313232314e343732342e303135384530303733312e31303733302e30323037ffc66303"
+        "d0040034000015c80a0000030000413138343033303036313232314e343732342e303135384530303733312e31303733302e30323037ffc66303",
     ]
     for hexmsg in hexmessages:
         print(hexmsg)
@@ -33,7 +33,10 @@ def test_parse_standard_answer():
 
     # properties from LocationProtocol
     assert message.opcode_header == LocationProtocol.LpSpecificTypes.standard_answer
-    assert message.opcode == LocationProtocol.LpGeneralTypes.standard_location_immediate_service
+    assert (
+        message.opcode
+        == LocationProtocol.LpGeneralTypes.standard_location_immediate_service
+    )
 
     # properties in Standard Answer
     assert message.data.result == LocationProtocol.ResultCodes.ok
@@ -52,7 +55,7 @@ def test_parse_standard_answer():
         "north_south": "N",
         "latitude": "4736.6977",
         "direction": "005",
-        "speed": "0.0"
+        "speed": "0.0",
     }
     assertGPSData(gps_msg, values)
     # Payload instances
@@ -64,8 +67,14 @@ def test_parse_condition_report_rssi():
     message = LocationProtocol.from_bytes(bytes.fromhex(hex_location_switzerland))
 
     # properties from LocationProtocol
-    assert message.opcode_header == LocationProtocol.LpSpecificTypes.condition_report_with_rssi
-    assert message.opcode == LocationProtocol.LpGeneralTypes.condition_triggered_reporting_service
+    assert (
+        message.opcode_header
+        == LocationProtocol.LpSpecificTypes.condition_report_with_rssi
+    )
+    assert (
+        message.opcode
+        == LocationProtocol.LpGeneralTypes.condition_triggered_reporting_service
+    )
 
     # properties in Condition Answer
     assert message.data.result == LocationProtocol.ResultCodes.ok
@@ -83,7 +92,7 @@ def test_parse_condition_report_rssi():
         "north_south": "N",
         "latitude": "4724.0158",
         "direction": "207",
-        "speed": "0.0"
+        "speed": "0.0",
     }
     assertGPSData(gps_msg, values)
 
@@ -93,9 +102,13 @@ def test_parse_condition_report_rssi():
 
 def assertGPSData(data: Gpsdata, values: Dict[str, str]):
     for property, val in values.items():
-        assert getattr(data, property).decode('ascii') == val, \
-            "Gps data does not match on property %s: %s should be %s" % (
-                property, getattr(data, property).decode('ascii'), val)
+        assert (
+            getattr(data, property).decode("ascii") == val
+        ), "Gps data does not match on property %s: %s should be %s" % (
+            property,
+            getattr(data, property).decode("ascii"),
+            val,
+        )
 
 
 if __name__ == "__main__":
