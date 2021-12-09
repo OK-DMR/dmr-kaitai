@@ -21,3 +21,6 @@ jobs:
       - name: Test with pytest
         run: |
           env PYTHONPATH=. pytest -vrpP
+      - uses: rickstaa/action-black@v1
+        with:
+          black_args: ". --check"
