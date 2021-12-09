@@ -31,5 +31,5 @@ seq:
     doc: azimuth(0-359), 0=north, increase is clockwise
 
 instances:
-    gps_available:
-        value: gps_status.to_s('ASCII') == 'A'
+  gps_available:
+    value: gps_status.to_s('ASCII') == 'A'
