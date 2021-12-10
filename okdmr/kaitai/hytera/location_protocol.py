@@ -12,9 +12,9 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
         % (kaitaistruct.__version__)
     )
 
+from okdmr.kaitai.hytera import radio_ip
 from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import datetimestring
-from okdmr.kaitai.hytera import radio_ip
 from okdmr.kaitai.hytera import intervalstring
 
 
@@ -363,7 +363,7 @@ class LocationProtocol(KaitaiStruct):
                 LocationProtocol.ResultCodes, self._io.read_u2be()
             )
             self.gpsdata = gpsdata.Gpsdata(self._io)
-            self.rssi_value = self._io.read_u2be()
+            self.rssi_value = self._io.read_s2be()
 
     class EmergencyReportStopAnswer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

@@ -224,7 +224,7 @@ types:
       - id: gpsdata
         type: gpsdata
       - id: rssi_value
-        type: u2be
+        type: s2be
         doc: -240-0
   condition_quick_gps_request:
     seq:
