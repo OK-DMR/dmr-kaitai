@@ -29,6 +29,7 @@ enums:
     0xD001: condition_report_request
     0xD002: condition_report_answer
     0xD003: condition_report
+    0xD004: condition_report_with_rssi
     0xD011: condition_quick_gps_request
     0xD012: condition_quick_gps_answer
   cmd_types:
@@ -69,6 +70,7 @@ seq:
         lp_specific_types::condition_report_request: condition_report_request
         lp_specific_types::condition_report_answer: condition_report_answer
         lp_specific_types::condition_report: condition_report
+        lp_specific_types::condition_report_with_rssi: condition_report_with_rssi
         lp_specific_types::condition_quick_gps_request: condition_quick_gps_request
         lp_specific_types::condition_quick_gps_answer: condition_quick_gps_answer
 types:
@@ -210,6 +212,20 @@ types:
         type: radio_ip
       - id: gpsdata
         type: gpsdata
+  condition_report_with_rssi:
+    seq:
+      - id: request_id
+        type: u4be
+      - id: radio_ip
+        type: radio_ip
+      - id: result
+        type: u2be
+        enum: result_codes
+      - id: gpsdata
+        type: gpsdata
+      - id: rssi_value
+        type: u2be
+        doc: -240-0
   condition_quick_gps_request:
     seq:
       - id: request_id

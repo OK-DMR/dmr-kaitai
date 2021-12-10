@@ -12,9 +12,9 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
         % (kaitaistruct.__version__)
     )
 
-from okdmr.kaitai.hytera import radio_ip
 from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import datetimestring
+from okdmr.kaitai.hytera import radio_ip
 from okdmr.kaitai.hytera import intervalstring
 
 
@@ -39,6 +39,7 @@ class LocationProtocol(KaitaiStruct):
         condition_report_request = 53249
         condition_report_answer = 53250
         condition_report = 53251
+        condition_report_with_rssi = 53252
         condition_quick_gps_request = 53265
         condition_quick_gps_answer = 53266
 
@@ -107,6 +108,10 @@ class LocationProtocol(KaitaiStruct):
             )
         elif _on == LocationProtocol.LpSpecificTypes.standard_answer_with_rssi:
             self.data = LocationProtocol.StandardAnswerWithRssi(
+                self._io, self, self._root
+            )
+        elif _on == LocationProtocol.LpSpecificTypes.condition_report_with_rssi:
+            self.data = LocationProtocol.ConditionReportWithRssi(
                 self._io, self, self._root
             )
         elif _on == LocationProtocol.LpSpecificTypes.triggered_report_stop_request:
@@ -343,6 +348,22 @@ class LocationProtocol(KaitaiStruct):
             self.radio_ip = radio_ip.RadioIp(self._io)
             self.time_remaining = intervalstring.Intervalstring(self._io)
             self.gpsdata = gpsdata.Gpsdata(self._io)
+
+    class ConditionReportWithRssi(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.request_id = self._io.read_u4be()
+            self.radio_ip = radio_ip.RadioIp(self._io)
+            self.result = KaitaiStream.resolve_enum(
+                LocationProtocol.ResultCodes, self._io.read_u2be()
+            )
+            self.gpsdata = gpsdata.Gpsdata(self._io)
+            self.rssi_value = self._io.read_u2be()
 
     class EmergencyReportStopAnswer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
