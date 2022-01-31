@@ -55,10 +55,7 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
             self.header = self._io.read_bytes(4)
             if not self.header == b"\x5A\x5A\x5A\x5A":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x5A\x5A\x5A\x5A",
-                    self.header,
-                    self._io,
-                    "/types/ping_pong/seq/0",
+                    b"\x5A\x5A\x5A\x5A", self.header, self._io, "/types/ping_pong/seq/0"
                 )
             self.heartbeat_identitier = self._io.read_bytes(5)
             if not self.heartbeat_identitier == b"\x0A\x00\x00\x00\x14":
