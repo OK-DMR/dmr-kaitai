@@ -31,6 +31,7 @@ class IpSiteConnectProtocol(KaitaiStruct):
     class CallTypes(Enum):
         private_call = 0
         group_call = 1
+        wakeup_call = 12
 
     class SlotTypes(Enum):
         slot_type_privacy_indicator = 0

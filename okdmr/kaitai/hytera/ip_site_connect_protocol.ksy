@@ -37,6 +37,7 @@ enums:
   call_types:
     0x00: private_call
     0x01: group_call
+    0x0C: wakeup_call
 instances:
   source_radio_id:
     value: source_radio_id_raw >> 8

@@ -9,3 +9,4 @@ def test_group_full_link_control():
     assert lc.specific_data.group_address == 9
     assert lc.specific_data.source_address == 2623266
     assert lc.crc_checksum == b"PGx"
+    print(prettyprint(lc))
