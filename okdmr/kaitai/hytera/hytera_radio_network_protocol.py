@@ -35,7 +35,7 @@ class HyteraRadioNetworkProtocol(KaitaiStruct):
         self.header_identifier = self._io.read_bytes(1)
         if not self.header_identifier == b"\x7E":
             raise kaitaistruct.ValidationNotEqualError(
-                b"\x7E", self.header_identifier, self._io, u"/seq/0"
+                b"\x7E", self.header_identifier, self._io, "/seq/0"
             )
         self.version = self._io.read_u1()
         self.block = self._io.read_u1()

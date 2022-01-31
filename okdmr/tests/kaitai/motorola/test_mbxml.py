@@ -33,9 +33,9 @@ def test_ufloatvar():
     # tuples (decoded, encoded, accuracy)
     ufloatvars = [
         (37 + (64 / 128), "2540", 1),
-        (37 + (8192 / (128 ** 2)), "2540", 1),
+        (37 + (8192 / (128**2)), "2540", 1),
         (160 + (7 / 128), "812007", 2),
-        (160 + (983 / (128 ** 2)), "81208757", 2),
+        (160 + (983 / (128**2)), "81208757", 2),
     ]
     for t in ufloatvars:
         ufloat = MotorolaBinaryXml.Ufloatvar.from_bytes(bytes.fromhex(t[1]))
@@ -54,7 +54,7 @@ def test_sfloatvar():
     # tuples (decoded, encoded, accuracy)
     sfloatvars = [
         (-37 - (64 / 128), "6540", 1),
-        (-160 - (983 / (128 ** 2)), "C1208757", 1),
+        (-160 - (983 / (128**2)), "C1208757", 1),
     ]
     for t in sfloatvars:
         sfloat = MotorolaBinaryXml.Sfloatvar.from_bytes(bytes.fromhex(t[1]))

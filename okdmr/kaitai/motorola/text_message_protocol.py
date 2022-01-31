@@ -71,7 +71,7 @@ class TextMessageProtocol(KaitaiStruct):
                     )
                 )
 
-            self.text_message = (self._io.read_bytes_full()).decode(u"utf-16-le")
+            self.text_message = (self._io.read_bytes_full()).decode("utf-16-le")
 
     class TmsServiceAvailability(KaitaiStruct):
         """This message is used to announce Text Messaging Service availability on the system by the TMS Server."""

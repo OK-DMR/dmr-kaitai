@@ -73,7 +73,7 @@ class HyteraDmrApplicationProtocol(KaitaiStruct):
         self.message_footer = self._io.read_bytes(1)
         if not self.message_footer == b"\x03":
             raise kaitaistruct.ValidationNotEqualError(
-                b"\x03", self.message_footer, self._io, u"/seq/4"
+                b"\x03", self.message_footer, self._io, "/seq/4"
             )
 
     class UndefinedProtocol(KaitaiStruct):

@@ -33,7 +33,7 @@ class RadioRegistrationService(KaitaiStruct):
         self.opcode = self._io.read_bytes(1)
         if not self.opcode == b"\x00":
             raise kaitaistruct.ValidationNotEqualError(
-                b"\x00", self.opcode, self._io, u"/seq/0"
+                b"\x00", self.opcode, self._io, "/seq/0"
             )
         self.rrs_type = KaitaiStream.resolve_enum(
             RadioRegistrationService.RrsTypes, self._io.read_u1()

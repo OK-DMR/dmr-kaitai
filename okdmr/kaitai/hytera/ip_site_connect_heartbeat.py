@@ -41,7 +41,7 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
             self.nullbyte = self._io.read_bytes(1)
             if not self.nullbyte == b"\x00":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x00", self.nullbyte, self._io, u"/types/keepalive/seq/0"
+                    b"\x00", self.nullbyte, self._io, "/types/keepalive/seq/0"
                 )
 
     class PingPong(KaitaiStruct):
@@ -58,7 +58,7 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
                     b"\x5A\x5A\x5A\x5A",
                     self.header,
                     self._io,
-                    u"/types/ping_pong/seq/0",
+                    "/types/ping_pong/seq/0",
                 )
             self.heartbeat_identitier = self._io.read_bytes(5)
             if not self.heartbeat_identitier == b"\x0A\x00\x00\x00\x14":
@@ -66,12 +66,12 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
                     b"\x0A\x00\x00\x00\x14",
                     self.heartbeat_identitier,
                     self._io,
-                    u"/types/ping_pong/seq/1",
+                    "/types/ping_pong/seq/1",
                 )
             self.nullbytes = self._io.read_bytes(3)
             if not self.nullbytes == b"\x00\x00\x00":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x00\x00\x00", self.nullbytes, self._io, u"/types/ping_pong/seq/2"
+                    b"\x00\x00\x00", self.nullbytes, self._io, "/types/ping_pong/seq/2"
                 )
             self.heartbeat_seq = self._io.read_u1()
             self.tail = self._io.read_bytes(7)
@@ -80,7 +80,7 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
                     b"\x5A\x59\x5A\x00\x00\x00\x00",
                     self.tail,
                     self._io,
-                    u"/types/ping_pong/seq/4",
+                    "/types/ping_pong/seq/4",
                 )
 
     class Unknown(KaitaiStruct):

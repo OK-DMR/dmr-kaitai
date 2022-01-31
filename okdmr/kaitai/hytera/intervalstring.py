@@ -22,4 +22,4 @@ class Intervalstring(KaitaiStruct):
         self._read()
 
     def _read(self):
-        self.interval = (self._io.read_bytes(8)).decode(u"UTF-8")
+        self.interval = (self._io.read_bytes(8)).decode("UTF-8")

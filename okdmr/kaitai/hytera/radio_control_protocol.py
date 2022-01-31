@@ -190,7 +190,7 @@ class RadioControlProtocol(KaitaiStruct):
                 self.header = self._io.read_bytes(6)
 
             if self._parent.message_length >= 198:
-                self.text = (self._io.read_bytes(192)).decode(u"utf-16-be")
+                self.text = (self._io.read_bytes(192)).decode("utf-16-be")
 
             if self._parent.message_length >= 206:
                 self.footer = self._io.read_bytes(8)

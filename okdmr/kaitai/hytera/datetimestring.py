@@ -22,4 +22,4 @@ class Datetimestring(KaitaiStruct):
         self._read()
 
     def _read(self):
-        self.datetime = (self._io.read_bytes(14)).decode(u"UTF-8")
+        self.datetime = (self._io.read_bytes(14)).decode("UTF-8")

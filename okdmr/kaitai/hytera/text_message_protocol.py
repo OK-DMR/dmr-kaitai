@@ -88,11 +88,11 @@ class TextMessageProtocol(KaitaiStruct):
                 self._io.read_bytes(
                     ((((self.message_length - 4) - 4) - 4) - self.option_sum_len)
                 )
-            ).decode(u"UTF-16LE")
+            ).decode("UTF-16LE")
 
         if self.option_flag.value == 1:
             self.option_field = (self._io.read_bytes(self.option_field_len)).decode(
-                u"UTF-16LE"
+                "UTF-16LE"
             )
 
     @property

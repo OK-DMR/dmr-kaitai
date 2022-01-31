@@ -117,9 +117,7 @@ class TelemetryProtocol(KaitaiStruct):
                 TelemetryProtocol.ResultTypes, self._io.read_u1()
             )
             self.message_length = self._io.read_u2be()
-            self.message = (self._io.read_bytes(self.message_length)).decode(
-                u"UTF-16LE"
-            )
+            self.message = (self._io.read_bytes(self.message_length)).decode("UTF-16LE")
 
     class RemoteControlAnswer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

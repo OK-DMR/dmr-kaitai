@@ -35,5 +35,5 @@ class Gpsdata(KaitaiStruct):
         if hasattr(self, "_m_gps_available"):
             return self._m_gps_available if hasattr(self, "_m_gps_available") else None
 
-        self._m_gps_available = (self.gps_status).decode(u"ASCII") == u"A"
+        self._m_gps_available = (self.gps_status).decode("ASCII") == "A"
         return self._m_gps_available if hasattr(self, "_m_gps_available") else None

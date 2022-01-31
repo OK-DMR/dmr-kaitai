@@ -31,7 +31,7 @@ class HyteraSimpleTransportReliabilityProtocol(KaitaiStruct):
         self.header = self._io.read_bytes(2)
         if not self.header == b"\x32\x42":
             raise kaitaistruct.ValidationNotEqualError(
-                b"\x32\x42", self.header, self._io, u"/seq/0"
+                b"\x32\x42", self.header, self._io, "/seq/0"
             )
         self.version = self._io.read_u1()
         self.reserved = self._io.read_bits_int_be(2)
