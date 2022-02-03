@@ -3,6 +3,7 @@
 from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
+from enum import Enum
 
 
 if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
@@ -14,6 +15,20 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 
 class Homebrew2015(KaitaiStruct):
     """Homebrew DMR protocol, based on PDF (DL5DI, G4KLX, DG1HT 2015) specification"""
+
+    class Timeslots(Enum):
+        timeslot_1 = 0
+        timeslot_2 = 1
+
+    class CallTypes(Enum):
+        group_call = 0
+        private_call = 1
+
+    class FrameTypes(Enum):
+        voice_data = 0
+        voice_sync = 1
+        data_or_data_sync = 2
+        unused = 3
 
     def __init__(self, _io, _parent=None, _root=None):
         self._io = _io
@@ -196,9 +211,15 @@ class Homebrew2015(KaitaiStruct):
             self.target_id = self._io.read_bits_int_be(24)
             self._io.align_to_byte()
             self.repeater_id = self._io.read_u4be()
-            self.slot_no = self._io.read_bits_int_be(1) != 0
-            self.call_type = self._io.read_bits_int_be(1) != 0
-            self.frame_type = self._io.read_bits_int_be(2)
+            self.slot_no = KaitaiStream.resolve_enum(
+                Homebrew2015.Timeslots, self._io.read_bits_int_be(1)
+            )
+            self.call_type = KaitaiStream.resolve_enum(
+                Homebrew2015.CallTypes, self._io.read_bits_int_be(1)
+            )
+            self.frame_type = KaitaiStream.resolve_enum(
+                Homebrew2015.FrameTypes, self._io.read_bits_int_be(2)
+            )
             self.data_type = self._io.read_bits_int_be(4)
             self._io.align_to_byte()
             self.stream_id = self._io.read_u4be()

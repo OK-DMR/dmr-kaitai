@@ -16,19 +16,21 @@ if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
 class Mmdvm2020(KaitaiStruct):
     """MMDVM protocol structure (MMDVMHost/HBlink3/DMRGateway) based on reversing effort"""
 
-    class Timeslots(Enum):
-        timeslot_1 = 0
-        timeslot_2 = 1
-
-    class CallTypes(Enum):
-        group_call = 0
-        private_call = 1
-
     class TalkerAliasTypes(Enum):
         talker_alias_header = 0
         talker_alias_block_1 = 1
         talker_alias_block_2 = 2
         talker_alias_block_3 = 3
+
+    class FrameTypes(Enum):
+        voice_data = 0
+        voice_sync = 1
+        data_or_data_sync = 2
+        unused = 3
+
+    class CallTypes(Enum):
+        group_call = 0
+        private_call = 1
 
     class PositionErrors(Enum):
         less_than_2m = 0
@@ -39,6 +41,10 @@ class Mmdvm2020(KaitaiStruct):
         less_than_or_equal_200km = 5
         more_than_200km = 6
         position_error_unknown_or_invalid = 7
+
+    class Timeslots(Enum):
+        timeslot_1 = 0
+        timeslot_2 = 1
 
     def __init__(self, _io, _parent=None, _root=None):
         self._io = _io
@@ -256,7 +262,9 @@ class Mmdvm2020(KaitaiStruct):
             self.call_type = KaitaiStream.resolve_enum(
                 Mmdvm2020.CallTypes, self._io.read_bits_int_be(1)
             )
-            self.frame_type = self._io.read_bits_int_be(2)
+            self.frame_type = KaitaiStream.resolve_enum(
+                Mmdvm2020.FrameTypes, self._io.read_bits_int_be(2)
+            )
             self.data_type = self._io.read_bits_int_be(4)
             self._io.align_to_byte()
             self.stream_id = self._io.read_u4be()

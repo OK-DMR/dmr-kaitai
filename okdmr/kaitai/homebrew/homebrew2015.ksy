@@ -3,6 +3,18 @@ meta:
   endian: be
 doc: |
   Homebrew DMR protocol, based on PDF (DL5DI, G4KLX, DG1HT 2015) specification
+enums:
+  timeslots:
+    0: timeslot_1
+    1: timeslot_2
+  call_types:
+    0: group_call
+    1: private_call
+  frame_types:
+    0b00: voice_data
+    0b01: voice_sync
+    0b10: data_or_data_sync
+    0b11: unused
 types:
   type_dmr_data:
     seq:
@@ -16,10 +28,13 @@ types:
         type: u4
       - id: slot_no
         type: b1
+        enum: timeslots
       - id: call_type
         type: b1
+        enum: call_types
       - id: frame_type
         type: b2
+        enum: frame_types
       - id: data_type
         type: b4
       - id: stream_id

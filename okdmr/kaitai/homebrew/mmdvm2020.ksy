@@ -5,11 +5,16 @@ doc: |
   MMDVM protocol structure (MMDVMHost/HBlink3/DMRGateway) based on reversing effort
 enums:
   timeslots:
-    0: "timeslot_1"
-    1: "timeslot_2"
+    0: timeslot_1
+    1: timeslot_2
   call_types:
-    0: "group_call"
-    1: "private_call"
+    0: group_call
+    1: private_call
+  frame_types:
+    0b00: voice_data
+    0b01: voice_sync
+    0b10: data_or_data_sync
+    0b11: unused
   talker_alias_types:
     0: talker_alias_header
     1: talker_alias_block_1
@@ -58,6 +63,7 @@ types:
         enum: call_types
       - id: frame_type
         type: b2
+        enum: frame_types
       - id: data_type
         type: b4
       - id: stream_id
