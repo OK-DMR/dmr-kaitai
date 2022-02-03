@@ -96,7 +96,11 @@ class FullLinkControl(KaitaiStruct):
             self.specific_data = FullLinkControl.GpsInfoLcPdu(
                 self._io, self, self._root
             )
-        self.crc_checksum = self._io.read_bytes(3)
+        if (self._io.size() - self._io.pos()) >= 3:
+            self.crc_checksum = self._io.read_bytes(3)
+
+        if self._io.size() <= 10:
+            self.cs5_checksum = self._io.read_bits_int_be(5)
 
     class GpsInfoLcPdu(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):

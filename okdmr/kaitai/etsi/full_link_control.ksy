@@ -104,3 +104,8 @@ seq:
   - id: crc_checksum
     doc: 3 bytes of Reed-Solomon CRC with applied CRC mask per B.3.12 Data Type CRC Mask
     size: 3
+    if: (_io.size - _io.pos) >= 3
+  - id: cs5_checksum
+    doc: 5-bit checksum for FullLC carried in embedded signalling
+    type: b5
+    if: _io.size <= 10
