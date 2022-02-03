@@ -17,7 +17,7 @@ setup(
     author="Marek Sebera",
     author_email="marek.sebera@gmail.com",
     license="AGPL-3.0",
-    version="0.7",
+    version="0.8",
     packages=[
         "okdmr.kaitai.etsi",
         "okdmr.kaitai.homebrew",
@@ -32,7 +32,7 @@ setup(
         "kaitaistruct>=0.9",
     ],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
         "Environment :: Console",
         "Topic :: Communications :: Ham Radio",
