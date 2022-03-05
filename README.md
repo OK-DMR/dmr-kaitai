@@ -22,6 +22,36 @@ And specifically avoid these mistakes:
 
   1. Modifying generated python sources / dissectors after generating
 
+## Supported
+
+ - ETSI
+   - CSBK (all from TS 102 361-2)
+   - Data Blocks (Rate 1, 1/2, 3/4 confirmed and unconfirmed)
+   - Data Headers (UDT, Response, Unconfirmed, Confirmed, Short Data Defined, Short Status Precoded, Proprietary)
+   - UDP IPv4 Compressed header
+   - FULL LC (Full Link Control, Group/Individual voice, GPS Info, Talker Alias + continuation blocks)
+ - HAM
+   - Homebrew 2015 (per DL5DI, G4KLX, DG1HT 2015)
+   - Mmdvm 2020 (with non-standardized features in mmdvm-host, dmr-gateway, hblink and others)
+ - Hytera
+   - Data Delivery States
+   - Data Transmit Protocol
+   - GPS Data
+   - HDAP (Hytera DMR Application Protocol)
+   - HRNP (Hytera Radio Network Protocol)
+   - HSTRP (Hytera Simple Transport Reliability Protocol)
+   - IPSC (with separate definition for IPSC Heartbeat)
+   - LP (Location Protocol)
+   - RCP (Radio Control Protocol)
+   - RRS (Radio Registration Service)
+   - RTTP (Real-time Transport Protocol)
+   - TP (Telemetry Protocol)
+   - TMP (Text Message Protocol)
+ - Motorola
+   - ARS (Automatic Registration Service)
+   - MBXML (Motorola Binary XML) - only partially supported now
+   - TMP (Text Message Protocol)
+
 ## Testing
 
 run `make test` (or pytest directly like this `env PYTHONPATH=. pytest -vrpP`)
