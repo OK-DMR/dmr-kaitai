@@ -1,6 +1,6 @@
 kaitaistruct>=0.9
 # for testing
-pytest
+pytest>=7.0.1
 pytest-cov
 # for repo contributors
 pre-commit

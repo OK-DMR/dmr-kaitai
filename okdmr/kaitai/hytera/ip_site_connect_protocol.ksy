@@ -12,12 +12,12 @@ enums:
     0x4444: slot_type_data_header
     0x5555: slot_type_rate_12_data
     0x6666: slot_type_rate_34_data
-    0x7777: slot_type_data_c
-    0x8888: slot_type_data_d
-    0x9999: slot_type_data_e
-    0xAAAA: slot_type_data_f
-    0xBBBB: slot_type_data_a
-    0xCCCC: slot_type_data_b
+    0x7777: slot_type_data_a
+    0x8888: slot_type_data_b
+    0x9999: slot_type_data_c
+    0xAAAA: slot_type_data_d
+    0xBBBB: slot_type_data_e
+    0xCCCC: slot_type_data_f
     0xDDDD: slot_type_wakeup_request
     # migh be data or voice sync as well
     0xEEEE: slot_type_sync
