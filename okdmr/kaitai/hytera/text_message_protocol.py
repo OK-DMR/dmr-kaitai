@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -98,11 +97,9 @@ class TextMessageProtocol(KaitaiStruct):
     @property
     def option_sum_len(self):
         if hasattr(self, "_m_option_sum_len"):
-            return (
-                self._m_option_sum_len if hasattr(self, "_m_option_sum_len") else None
-            )
+            return self._m_option_sum_len
 
         self._m_option_sum_len = (
             (self.option_field_len + 2) if self.option_flag.value == 1 else 0
         )
-        return self._m_option_sum_len if hasattr(self, "_m_option_sum_len") else None
+        return getattr(self, "_m_option_sum_len", None)

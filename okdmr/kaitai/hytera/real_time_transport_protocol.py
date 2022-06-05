@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -70,9 +69,9 @@ class RealTimeTransportProtocol(KaitaiStruct):
             self.sequence_number = self._io.read_u2be()
             self.timestamp = self._io.read_u4be()
             self.ssrc = self._io.read_u4be()
-            self.csrc = [None] * (self.num_csrc)
+            self.csrc = []
             for i in range(self.num_csrc):
-                self.csrc[i] = self._io.read_u4be()
+                self.csrc.append(self._io.read_u4be())
 
     class HeaderExtension(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -97,11 +96,7 @@ class RealTimeTransportProtocol(KaitaiStruct):
     @property
     def len_padding_if_exists(self):
         if hasattr(self, "_m_len_padding_if_exists"):
-            return (
-                self._m_len_padding_if_exists
-                if hasattr(self, "_m_len_padding_if_exists")
-                else None
-            )
+            return self._m_len_padding_if_exists
 
         if self.fixed_header.padding:
             _pos = self._io.pos()
@@ -109,18 +104,14 @@ class RealTimeTransportProtocol(KaitaiStruct):
             self._m_len_padding_if_exists = self._io.read_u1()
             self._io.seek(_pos)
 
-        return (
-            self._m_len_padding_if_exists
-            if hasattr(self, "_m_len_padding_if_exists")
-            else None
-        )
+        return getattr(self, "_m_len_padding_if_exists", None)
 
     @property
     def len_padding(self):
         if hasattr(self, "_m_len_padding"):
-            return self._m_len_padding if hasattr(self, "_m_len_padding") else None
+            return self._m_len_padding
 
         self._m_len_padding = (
             self.len_padding_if_exists if self.fixed_header.padding else 0
         )
-        return self._m_len_padding if hasattr(self, "_m_len_padding") else None
+        return getattr(self, "_m_len_padding", None)

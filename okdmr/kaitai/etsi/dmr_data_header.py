@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -152,18 +151,12 @@ class DmrDataHeader(KaitaiStruct):
         @property
         def appended_blocks(self):
             if hasattr(self, "_m_appended_blocks"):
-                return (
-                    self._m_appended_blocks
-                    if hasattr(self, "_m_appended_blocks")
-                    else None
-                )
+                return self._m_appended_blocks
 
             self._m_appended_blocks = (
                 self.appended_blocks_msb << 4
             ) + self.appended_blocks_lsb
-            return (
-                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
-            )
+            return getattr(self, "_m_appended_blocks", None)
 
     class DataHeaderProprietary(KaitaiStruct):
         """9.2.9 Proprietary Header (P_HEAD) PDU."""
@@ -227,18 +220,12 @@ class DmrDataHeader(KaitaiStruct):
         @property
         def appended_blocks(self):
             if hasattr(self, "_m_appended_blocks"):
-                return (
-                    self._m_appended_blocks
-                    if hasattr(self, "_m_appended_blocks")
-                    else None
-                )
+                return self._m_appended_blocks
 
             self._m_appended_blocks = (
                 self.appended_blocks_msb << 4
             ) + self.appended_blocks_lsb
-            return (
-                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
-            )
+            return getattr(self, "_m_appended_blocks", None)
 
     class DataHeaderResponse(KaitaiStruct):
         """9.2.4 Confirmed Response packet Header (C_RHEAD) PDU."""
@@ -367,18 +354,12 @@ class DmrDataHeader(KaitaiStruct):
         @property
         def appended_blocks(self):
             if hasattr(self, "_m_appended_blocks"):
-                return (
-                    self._m_appended_blocks
-                    if hasattr(self, "_m_appended_blocks")
-                    else None
-                )
+                return self._m_appended_blocks
 
             self._m_appended_blocks = (
                 self.appended_blocks_msb << 4
             ) + self.appended_blocks_lsb
-            return (
-                self._m_appended_blocks if hasattr(self, "_m_appended_blocks") else None
-            )
+            return getattr(self, "_m_appended_blocks", None)
 
     class DataHeaderUdt(KaitaiStruct):
         """9.2.13 Unified Data Transport Header (UDT_HEAD) PDU."""
@@ -418,7 +399,7 @@ class DmrDataHeader(KaitaiStruct):
     @property
     def data(self):
         if hasattr(self, "_m_data"):
-            return self._m_data if hasattr(self, "_m_data") else None
+            return self._m_data
 
         io = self._root._io
         _pos = io.pos()
@@ -475,4 +456,4 @@ class DmrDataHeader(KaitaiStruct):
                 _io__raw__m_data, self, self._root
             )
         io.seek(_pos)
-        return self._m_data if hasattr(self, "_m_data") else None
+        return getattr(self, "_m_data", None)

@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -110,18 +109,12 @@ class TextMessageProtocol(KaitaiStruct):
         @property
         def sequence_number(self):
             if hasattr(self, "_m_sequence_number"):
-                return (
-                    self._m_sequence_number
-                    if hasattr(self, "_m_sequence_number")
-                    else None
-                )
+                return self._m_sequence_number
 
             self._m_sequence_number = (
                 self.sequence_number_msb_bits << 4
             ) + self.sequence_number_lsb_bits
-            return (
-                self._m_sequence_number if hasattr(self, "_m_sequence_number") else None
-            )
+            return getattr(self, "_m_sequence_number", None)
 
     class MessageHeaderBits(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -179,16 +172,10 @@ class TextMessageProtocol(KaitaiStruct):
         @property
         def sequence_number(self):
             if hasattr(self, "_m_sequence_number"):
-                return (
-                    self._m_sequence_number
-                    if hasattr(self, "_m_sequence_number")
-                    else None
-                )
+                return self._m_sequence_number
 
             self._m_sequence_number = (self.header_msb_bits << 4) + self.header_lsb_bits
-            return (
-                self._m_sequence_number if hasattr(self, "_m_sequence_number") else None
-            )
+            return getattr(self, "_m_sequence_number", None)
 
     class TmsServiceAvailabilityAcknowledgement(KaitaiStruct):
         """This message is used to positively acknowledge a service availability message (no headers or payload)
@@ -222,12 +209,10 @@ class TextMessageProtocol(KaitaiStruct):
     def custom_pdu_type(self):
         """special enumerable pdu type (ack-type + control-or-user + pdu-type-id)."""
         if hasattr(self, "_m_custom_pdu_type"):
-            return (
-                self._m_custom_pdu_type if hasattr(self, "_m_custom_pdu_type") else None
-            )
+            return self._m_custom_pdu_type
 
         self._m_custom_pdu_type = (
             (int(self._root.message_header.acknowledgement_required) << 5)
             + (int(self._root.message_header.control_user_bit) << 4)
         ) + self._root.message_header.pdu_type
-        return self._m_custom_pdu_type if hasattr(self, "_m_custom_pdu_type") else None
+        return getattr(self, "_m_custom_pdu_type", None)

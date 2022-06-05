@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -94,33 +93,23 @@ class IpSiteConnectProtocol(KaitaiStruct):
     @property
     def source_radio_id(self):
         if hasattr(self, "_m_source_radio_id"):
-            return (
-                self._m_source_radio_id if hasattr(self, "_m_source_radio_id") else None
-            )
+            return self._m_source_radio_id
 
         self._m_source_radio_id = self.source_radio_id_raw >> 8
-        return self._m_source_radio_id if hasattr(self, "_m_source_radio_id") else None
+        return getattr(self, "_m_source_radio_id", None)
 
     @property
     def destination_radio_id(self):
         if hasattr(self, "_m_destination_radio_id"):
-            return (
-                self._m_destination_radio_id
-                if hasattr(self, "_m_destination_radio_id")
-                else None
-            )
+            return self._m_destination_radio_id
 
         self._m_destination_radio_id = self.destination_radio_id_raw >> 8
-        return (
-            self._m_destination_radio_id
-            if hasattr(self, "_m_destination_radio_id")
-            else None
-        )
+        return getattr(self, "_m_destination_radio_id", None)
 
     @property
     def color_code(self):
         if hasattr(self, "_m_color_code"):
-            return self._m_color_code if hasattr(self, "_m_color_code") else None
+            return self._m_color_code
 
         self._m_color_code = self.color_code_raw & 15
-        return self._m_color_code if hasattr(self, "_m_color_code") else None
+        return getattr(self, "_m_color_code", None)

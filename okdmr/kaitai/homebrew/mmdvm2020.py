@@ -1,12 +1,11 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 from enum import Enum
 
 
-if parse_version(kaitaistruct.__version__) < parse_version("0.9"):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception(
         "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
         % (kaitaistruct.__version__)
@@ -359,10 +358,10 @@ class Mmdvm2020(KaitaiStruct):
     @property
     def fifth_letter(self):
         if hasattr(self, "_m_fifth_letter"):
-            return self._m_fifth_letter if hasattr(self, "_m_fifth_letter") else None
+            return self._m_fifth_letter
 
         _pos = self._io.pos()
         self._io.seek(4)
         self._m_fifth_letter = (self._io.read_bytes(1)).decode("ASCII")
         self._io.seek(_pos)
-        return self._m_fifth_letter if hasattr(self, "_m_fifth_letter") else None
+        return getattr(self, "_m_fifth_letter", None)
