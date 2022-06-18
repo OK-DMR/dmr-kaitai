@@ -6,6 +6,8 @@ doc: |
   10.22.0.0 means the subnet is set to 10.x.x.x (C) and radio ID is 2200
 instances:
   radio_id:
+    value: radio_id_1*10000 + radio_id_2*100 + radio_id_3
+  radio_id_str:
     value: radio_id_1.to_s + radio_id_2.to_s + radio_id_3.to_s
 seq:
   - id: subnet

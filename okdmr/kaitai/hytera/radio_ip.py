@@ -35,6 +35,16 @@ class RadioIp(KaitaiStruct):
             return self._m_radio_id
 
         self._m_radio_id = (
+            (self.radio_id_1 * 10000) + (self.radio_id_2 * 100)
+        ) + self.radio_id_3
+        return getattr(self, "_m_radio_id", None)
+
+    @property
+    def radio_id_str(self):
+        if hasattr(self, "_m_radio_id_str"):
+            return self._m_radio_id_str
+
+        self._m_radio_id_str = (
             str(self.radio_id_1) + str(self.radio_id_2) + str(self.radio_id_3)
         )
-        return getattr(self, "_m_radio_id", None)
+        return getattr(self, "_m_radio_id_str", None)
