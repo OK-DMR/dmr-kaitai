@@ -1,5 +1,3 @@
-import unittest
-
 from typing import List, Dict
 
 from okdmr.kaitai.hytera.gpsdata import Gpsdata
@@ -57,7 +55,7 @@ def test_parse_standard_answer():
         "direction": "005",
         "speed": "0.0",
     }
-    assertGPSData(gps_msg, values)
+    assert_gps_data(gps_msg, values)
     # Payload instances
     assert gps_msg.gps_available
 
@@ -94,19 +92,19 @@ def test_parse_condition_report_rssi():
         "direction": "207",
         "speed": "0.0",
     }
-    assertGPSData(gps_msg, values)
+    assert_gps_data(gps_msg, values)
 
     # Payload instances
     assert gps_msg.gps_available
 
 
-def assertGPSData(data: Gpsdata, values: Dict[str, str]):
-    for property, val in values.items():
+def assert_gps_data(data: Gpsdata, values: Dict[str, str]):
+    for prop, val in values.items():
         assert (
-            getattr(data, property).decode("ascii") == val
+            getattr(data, prop).decode("ascii") == val
         ), "Gps data does not match on property %s: %s should be %s" % (
-            property,
-            getattr(data, property).decode("ascii"),
+            prop,
+            getattr(data, prop).decode("ascii"),
             val,
         )
 
