@@ -3,7 +3,7 @@ from typing import List
 from okdmr.kaitai.hytera.hytera_dmr_application_protocol import (
     HyteraDmrApplicationProtocol,
 )
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_hdap():

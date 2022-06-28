@@ -3,7 +3,8 @@ from typing import Dict
 from okdmr.kaitai.motorola.automatic_registration_service import (
     AutomaticRegistrationService,
 )
-from okdmr.tests.kaitai.tests_utils import prettyprint, assert_expected_attribute_values
+from okdmr.kaitai.tools.prettyprint import prettyprint
+from okdmr.tests.kaitai.test_utils import assert_expected_attribute_values
 
 
 def test_ars():

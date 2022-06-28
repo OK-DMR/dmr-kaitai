@@ -1,5 +1,5 @@
 from okdmr.kaitai.etsi.full_link_control import FullLinkControl
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_group_full_link_control():

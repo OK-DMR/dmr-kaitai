@@ -1,8 +1,7 @@
-from audioop import byteswap
 from typing import List
 
 from okdmr.kaitai.hytera.ip_site_connect_protocol import IpSiteConnectProtocol
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_ipsc():

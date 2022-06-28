@@ -1,7 +1,7 @@
 from typing import List
 
 from okdmr.kaitai.etsi.dmr_data_header import DmrDataHeader
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_dmr_data_headers():

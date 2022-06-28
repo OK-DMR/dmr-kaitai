@@ -2,7 +2,7 @@ from typing import List, Dict
 
 from okdmr.kaitai.hytera.gpsdata import Gpsdata
 from okdmr.kaitai.hytera.location_protocol import LocationProtocol
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_lp():

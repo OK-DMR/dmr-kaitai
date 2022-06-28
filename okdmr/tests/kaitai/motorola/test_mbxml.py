@@ -5,7 +5,7 @@ from okdmr.kaitai.motorola.motorola_utils import (
     ufloatvar_to_float,
     sfloatvar_to_float,
 )
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_uintvar():

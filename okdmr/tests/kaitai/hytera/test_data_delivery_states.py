@@ -1,7 +1,7 @@
 from typing import List
 
 from okdmr.kaitai.hytera.data_delivery_states import DataDeliveryStates
-from okdmr.tests.kaitai.tests_utils import prettyprint
+from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
 def test_dds():
