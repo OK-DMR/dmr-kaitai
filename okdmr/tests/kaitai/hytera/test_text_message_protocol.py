@@ -9,7 +9,7 @@ def test_hytera_text_messages():
         # hytera short data defined, text message
         # probably 2bytes encoding (0x0001 => UTF-16-LE) and rest is text data
         "00014100480019804a002000540041004400590020004d004100520045004b00000000000000000000000000",
-        # Is this really a txt message
+        # [TMP PRIVATE FROM:[RadioIP subnet:10 id:222222] TO:[RadioIP subnet:10 id:111111]] [TEXT: OLIVER TEST]
         "0980a10022000000010a01b2070a03640e4f004c004900560045005200200054004500530054007a03",
     ]
     for hexmsg in hexmessages:
