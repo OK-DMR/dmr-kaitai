@@ -1,6 +1,6 @@
 # DMR Kaitai protocols
 
-![.github/workflows/sanity.yml](https://img.shields.io/github/workflow/status/OK-DMR/dmr-kaitai/Sanity?style=flat-square)
+![.github/workflows/sanity.yml](https://img.shields.io/github/actions/workflow/status/OK-DMR/dmr-kaitai/sanity.yml?style=flat-square&branch=master)
 ![Code Style: Python Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)
 ![License](https://img.shields.io/pypi/l/dmr-kaitai?style=flat-square)
 ![Last released version](https://img.shields.io/pypi/v/dmr-kaitai?style=flat-square)
