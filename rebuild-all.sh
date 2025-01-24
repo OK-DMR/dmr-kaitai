@@ -11,9 +11,9 @@ do
   cd ${dir}
   if [ "$(find -maxdepth 1 -type f -iname '*.ksy')" ]; then
     bash -x -c "kaitai-struct-compiler -t python --python-package ${python_package} *.ksy"
-    black .
+    python3 -m black .
   fi
   cd ${dirbase}
 done
 
-black okdmr
+python3 -m black okdmr

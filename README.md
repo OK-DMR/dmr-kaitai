@@ -57,9 +57,14 @@ And specifically avoid these mistakes:
 
 run `make test` (or pytest directly like this `env PYTHONPATH=. pytest -vrpP`)
 
+## Development notes
+
+1) Use `make test`, `make build` or `make test-only` (without rebuilding the .py files first), or use the commands from Makefile directly, if you don't have `make` available
+2) If you intend to modify/develop this library, use `python3 pip install -e --upgrade .`, changes to dmr-kaitai project sources are then automatically propagated to your environment without re-installing
+
 ## Tools
 
-If you install through `pip3 install dmr-kaitai` or manually from repo using `python3 setup.py install`, you should be
+If you install through `pip3 install dmr-kaitai` or manually from repo using `python3 pip install .`, you should be
 provided with command-line tools,
 to pass hex payloads of various protocols to and see what is inside. Tools support multiple hex payloads, each hex
 string is treated as separate PDU to parse and pretty-print

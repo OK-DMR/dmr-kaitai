@@ -11,8 +11,8 @@ if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
         % (kaitaistruct.__version__)
     )
 
-from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import radio_ip
+from okdmr.kaitai.hytera import gpsdata
 from okdmr.kaitai.hytera import datetimestring
 from okdmr.kaitai.hytera import intervalstring
 

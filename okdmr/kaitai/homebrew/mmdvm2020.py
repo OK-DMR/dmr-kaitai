@@ -102,9 +102,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(3)
-            if not self.magic == b"\x4F\x4E\x47":
+            if not self.magic == b"\x4f\x4e\x47":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x4F\x4E\x47",
+                    b"\x4f\x4e\x47",
                     self.magic,
                     self._io,
                     "/types/type_master_pong/seq/0",
@@ -190,9 +190,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(2)
-            if not self.magic == b"\x41\x4B":
+            if not self.magic == b"\x41\x4b":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x41\x4B",
+                    b"\x41\x4b",
                     self.magic,
                     self._io,
                     "/types/type_master_not_accept/seq/0",
@@ -218,9 +218,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(2)
-            if not self.magic == b"\x43\x4B":
+            if not self.magic == b"\x43\x4b":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x43\x4B",
+                    b"\x43\x4b",
                     self.magic,
                     self._io,
                     "/types/type_master_repeater_ack/seq/0",
@@ -236,9 +236,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(1)
-            if not self.magic == b"\x4C":
+            if not self.magic == b"\x4c":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x4C", self.magic, self._io, "/types/type_master_closing/seq/0"
+                    b"\x4c", self.magic, self._io, "/types/type_master_closing/seq/0"
                 )
             self.repeater_id = self._io.read_u4be()
 
@@ -306,9 +306,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(1)
-            if not self.magic == b"\x4C":
+            if not self.magic == b"\x4c":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x4C", self.magic, self._io, "/types/type_repeater_closing/seq/0"
+                    b"\x4c", self.magic, self._io, "/types/type_repeater_closing/seq/0"
                 )
             self.repeater_id = self._io.read_u4be()
 
@@ -346,9 +346,9 @@ class Mmdvm2020(KaitaiStruct):
 
         def _read(self):
             self.magic = self._io.read_bytes(3)
-            if not self.magic == b"\x49\x4E\x47":
+            if not self.magic == b"\x49\x4e\x47":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x49\x4E\x47",
+                    b"\x49\x4e\x47",
                     self.magic,
                     self._io,
                     "/types/type_repeater_ping/seq/0",

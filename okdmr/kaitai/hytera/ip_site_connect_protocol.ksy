@@ -37,7 +37,8 @@ enums:
   call_types:
     0x00: private_call
     0x01: group_call
-    0x0C: wakeup_call
+    0x02: wakeup_call_2
+    0x0C: wakeup_call_c
 instances:
   source_radio_id:
     value: source_radio_id_raw >> 8
@@ -45,6 +46,8 @@ instances:
     value: destination_radio_id_raw >> 8
   color_code:
     value: color_code_raw & 0x000F
+  is_wakeup:
+    value: call_type == call_types::wakeup_call_2 or call_type == call_types::wakeup_call_c or slot_type == slot_types::slot_type_wakeup_request
 seq:
   - id: source_port
     size: 2

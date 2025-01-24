@@ -52,14 +52,14 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
 
         def _read(self):
             self.header = self._io.read_bytes(4)
-            if not self.header == b"\x5A\x5A\x5A\x5A":
+            if not self.header == b"\x5a\x5a\x5a\x5a":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x5A\x5A\x5A\x5A", self.header, self._io, "/types/ping_pong/seq/0"
+                    b"\x5a\x5a\x5a\x5a", self.header, self._io, "/types/ping_pong/seq/0"
                 )
             self.heartbeat_identitier = self._io.read_bytes(5)
-            if not self.heartbeat_identitier == b"\x0A\x00\x00\x00\x14":
+            if not self.heartbeat_identitier == b"\x0a\x00\x00\x00\x14":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x0A\x00\x00\x00\x14",
+                    b"\x0a\x00\x00\x00\x14",
                     self.heartbeat_identitier,
                     self._io,
                     "/types/ping_pong/seq/1",
@@ -71,9 +71,9 @@ class IpSiteConnectHeartbeat(KaitaiStruct):
                 )
             self.heartbeat_seq = self._io.read_u1()
             self.tail = self._io.read_bytes(7)
-            if not self.tail == b"\x5A\x59\x5A\x00\x00\x00\x00":
+            if not self.tail == b"\x5a\x59\x5a\x00\x00\x00\x00":
                 raise kaitaistruct.ValidationNotEqualError(
-                    b"\x5A\x59\x5A\x00\x00\x00\x00",
+                    b"\x5a\x59\x5a\x00\x00\x00\x00",
                     self.tail,
                     self._io,
                     "/types/ping_pong/seq/4",

@@ -30,7 +30,8 @@ class IpSiteConnectProtocol(KaitaiStruct):
     class CallTypes(Enum):
         private_call = 0
         group_call = 1
-        wakeup_call = 12
+        wakeup_call_2 = 2
+        wakeup_call_c = 12
 
     class SlotTypes(Enum):
         slot_type_privacy_indicator = 0
@@ -113,3 +114,18 @@ class IpSiteConnectProtocol(KaitaiStruct):
 
         self._m_color_code = self.color_code_raw & 15
         return getattr(self, "_m_color_code", None)
+
+    @property
+    def is_wakeup(self):
+        if hasattr(self, "_m_is_wakeup"):
+            return self._m_is_wakeup
+
+        self._m_is_wakeup = (
+            (self.call_type == IpSiteConnectProtocol.CallTypes.wakeup_call_2)
+            or (self.call_type == IpSiteConnectProtocol.CallTypes.wakeup_call_c)
+            or (
+                self.slot_type
+                == IpSiteConnectProtocol.SlotTypes.slot_type_wakeup_request
+            )
+        )
+        return getattr(self, "_m_is_wakeup", None)
