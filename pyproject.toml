@@ -46,7 +46,8 @@ test = [
     "pytest>=8.1.1",
     "pytest-cov>=4.1.0",
     "coverage>=7.4.0",
-    "pre-commit>=4.1.0",
+    # pre-commit v3.6.0 drops python<3.9 support, this should allow developers/testers to use the last version available to their python runtime
+    "pre-commit",
     "black>=22.6.0"
 ]
 

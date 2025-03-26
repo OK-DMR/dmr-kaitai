@@ -16,8 +16,8 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip setuptools wheel
-          python3 -m pip install -e .
-          python3 -m pip install .[test]
+          python3 -m pip install --upgrade -e .
+          python3 -m pip install --upgrade .[test]
       - name: Test with pytest
         run: |
           make test
