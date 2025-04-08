@@ -1,11 +1,11 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 25.1.0
     hooks:
       - id: black
         language_version: python3
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.3
+    rev: v1.37.0
     hooks:
       - id: yamllint
         args: [-c=.yamllint, .]
