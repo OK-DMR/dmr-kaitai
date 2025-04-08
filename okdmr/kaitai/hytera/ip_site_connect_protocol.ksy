@@ -31,6 +31,7 @@ enums:
   packet_types:
     0x41: a
     0x42: b
+    0x43: terminator
   timeslots:
     0x1111: timeslot_1
     0x2222: timeslot_2
