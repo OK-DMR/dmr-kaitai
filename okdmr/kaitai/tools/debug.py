@@ -2,9 +2,9 @@ import sys
 from argparse import ArgumentParser
 from typing import Type, Optional, List
 
-from hytera_homebrew_bridge.lib.utils import byteswap_bytes
 from kaitaistruct import KaitaiStruct
 from okdmr.kaitai.hytera.ip_site_connect_protocol import IpSiteConnectProtocol
+from okdmr.kaitai.tools.byteswap import byteswap_bytes
 from okdmr.kaitai.tools.prettyprint import prettyprint
 
 
