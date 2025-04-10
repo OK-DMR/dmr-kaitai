@@ -48,7 +48,8 @@ test = [
     "coverage>=7.4.0",
     # pre-commit v3.6.0 drops python<3.9 support, this should allow developers/testers to use the last version available to their python runtime
     "pre-commit",
-    "black>=25.1.0"
+    # black 24.10.0 drops python<3.9 support
+    "black"
 ]
 
 [project.scripts]
