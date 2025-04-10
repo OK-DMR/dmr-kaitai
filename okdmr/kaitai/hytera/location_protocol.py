@@ -18,6 +18,7 @@ from okdmr.kaitai.hytera import intervalstring
 
 
 class LocationProtocol(KaitaiStruct):
+
     class CmdTypes(Enum):
         cancel_request = 0
         start_request = 1

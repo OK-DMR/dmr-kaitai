@@ -21,6 +21,7 @@ from okdmr.kaitai.hytera import radio_registration_service
 
 
 class HyteraDmrApplicationProtocol(KaitaiStruct):
+
     class MessageHeaderTypes(Enum):
         radio_control_protocol = 2
         location_protocol = 8

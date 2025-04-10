@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import radio_ip
 
 
 class RadioRegistrationService(KaitaiStruct):
+
     class RrsTypes(Enum):
         de_registration = 1
         online_check = 2

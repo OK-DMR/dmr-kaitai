@@ -13,6 +13,7 @@ if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
 
 
 class AutomaticRegistrationService(KaitaiStruct):
+
     class RegistrationEvents(Enum):
         initial_event = 1
         refresh_event = 2

@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import hytera_dmr_application_protocol
 
 
 class HyteraRadioNetworkProtocol(KaitaiStruct):
+
     class Opcodes(Enum):
         data = 0
         data_ack = 16

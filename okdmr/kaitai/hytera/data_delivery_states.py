@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import radio_ip
 
 
 class DataDeliveryStates(KaitaiStruct):
+
     class StateTypes(Enum):
         location_protocol_state = 8
         radio_registration_service_state = 17

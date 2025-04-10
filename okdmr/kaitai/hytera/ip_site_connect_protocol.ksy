@@ -19,7 +19,7 @@ enums:
     0xBBBB: slot_type_data_e
     0xCCCC: slot_type_data_f
     0xDDDD: slot_type_wakeup_request
-    # migh be data or voice sync as well
+    # might be data or voice sync as well
     0xEEEE: slot_type_sync
   frame_types:
     0x1111: frame_type_voice_sync
@@ -29,6 +29,7 @@ enums:
     0xBBBB: frame_type_voice
     0x0000: frame_type_data
   packet_types:
+    0x01: pi_header
     0x41: a
     0x42: b
     0x43: terminator
@@ -56,6 +57,7 @@ seq:
       UDP source port of IPSC packet
   - id: fixed_header
     size: 2
+    contents: [0x5a, 0x5a]
   - id: sequence_number
     type: u1
   - id: reserved_3

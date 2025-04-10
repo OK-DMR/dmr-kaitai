@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import radio_ip
 
 
 class DataTransmitProtocol(KaitaiStruct):
+
     class ServiceTypes(Enum):
         data_transmit_protocol = 160
 

@@ -16,6 +16,7 @@ class IpSiteConnectProtocol(KaitaiStruct):
     """Hytera IP Multi-Site Protocol re-implementation from dmrshark original"""
 
     class PacketTypes(Enum):
+        pi_header = 1
         a = 65
         b = 66
         terminator = 67
@@ -64,6 +65,10 @@ class IpSiteConnectProtocol(KaitaiStruct):
     def _read(self):
         self.source_port = self._io.read_bytes(2)
         self.fixed_header = self._io.read_bytes(2)
+        if not self.fixed_header == b"\x5a\x5a":
+            raise kaitaistruct.ValidationNotEqualError(
+                b"\x5a\x5a", self.fixed_header, self._io, "/seq/1"
+            )
         self.sequence_number = self._io.read_u1()
         self.reserved_3 = self._io.read_bytes(3)
         self.packet_type = KaitaiStream.resolve_enum(

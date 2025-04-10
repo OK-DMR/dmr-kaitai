@@ -13,6 +13,7 @@ if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
 
 
 class RadioControlProtocol(KaitaiStruct):
+
     class ServiceTypes(Enum):
         radio_identification_request = 4
         button_and_keyboard_operation_request = 65

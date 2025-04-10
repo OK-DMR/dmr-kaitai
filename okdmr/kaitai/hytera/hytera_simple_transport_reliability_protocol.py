@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import hytera_dmr_application_protocol
 
 
 class HyteraSimpleTransportReliabilityProtocol(KaitaiStruct):
+
     class OptionCommands(Enum):
         realtime = 1
         device_id = 3

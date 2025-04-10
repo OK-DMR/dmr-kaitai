@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import radio_ip
 
 
 class TelemetryProtocol(KaitaiStruct):
+
     class ServiceTypes(Enum):
         status_report_service = 160
         remote_control_service = 176

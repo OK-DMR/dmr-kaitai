@@ -13,6 +13,7 @@ if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
 
 
 class TextMessageProtocol(KaitaiStruct):
+
     class TmsServiceCapability(Enum):
         limited_capability = 0
         internal_capability = 1

@@ -15,6 +15,7 @@ from okdmr.kaitai.hytera import radio_ip
 
 
 class TextMessageProtocol(KaitaiStruct):
+
     class AckFlags(Enum):
         ack_required = 0
         ack_not_required = 1
