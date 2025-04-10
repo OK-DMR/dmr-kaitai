@@ -1,7 +1,0 @@
-black>=22.6.0
-kaitaistruct>=0.10
-# for testing
-pytest>=7.0.1
-pytest-cov
-# for repo contributors
-pre-commit
