@@ -21,6 +21,8 @@ jobs:
       - name: Test with pytest
         run: |
           make test-only
-      - uses: rickstaa/action-black@v1
+      - uses: psf/black@stable
         with:
-          black_args: ". --check"
+          options: "--check"
+          src: "."
+          use_pyproject: true
